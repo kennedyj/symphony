@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$(uname -s)" == "Darwin" ]
+then
+  if [ -e "$HOME/.profiles/mac" ]
+  then
+    for p in $HOME/.profiles/mac/*
+    do
+      [ -f $p ] && . $p
+    done
+  fi
+fi

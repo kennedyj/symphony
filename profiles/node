@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ -e "$HOME/.node-completion/" ]
+then
+# {{{
+# Node Completion - Auto-generated, do not touch.
+shopt -s progcomp
+for f in $(command ls $HOME/.node-completion); do
+  f="$HOME/.node-completion/$f"
+  test -f "$f" && . "$f"
+done
+# }}}
+fi
+
+### Added by nvm
+[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM

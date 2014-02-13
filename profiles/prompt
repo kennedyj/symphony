@@ -1,0 +1,73 @@
+#!/bin/bash
+
+export prompt_show_git=1  
+
+# \072 == :
+# for getting the git branch
+parse_git_branch() {
+  if [ "${#prompt_show_git}" -gt 0 ]
+  then
+    BRANCH_NAME=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e "s~* \(.*\)~\1~"`
+    if [ "${#BRANCH_NAME}" -gt 0 ]
+    then
+      echo -e "$COLOR_GRAY\072$COLOR_PURPLE$BRANCH_NAME$COLOR_NONE"
+    fi
+  fi
+}
+
+print_aws_account() {
+  if [ "${#aws_account}" -gt 0 ]
+  then 
+    echo -e "$COLOR_LIGHT_RED$aws_account$COLOR_GRAY\072$COLOR_PURPLE$AWS_REGION$COLOR_GRAY\072$COLOR_NONE"
+  fi
+}
+
+prompt_time() {
+  if [ "${#prompt_show_time}" -gt 0 ]
+  then
+    echo -e "$COLOR_YELLOW$(date "+%H:%M")$COLOR_GRAY:"
+  fi
+}
+
+prompt_virtualenv() {
+  if [ -n "$VIRTUAL_ENV" ]
+  then
+    echo -e "$COLOR_GREEN$(basename $VIRTUAL_ENV)$COLOR_GRAY:"
+  fi
+}
+
+prompt_mausoleum() {
+  crypt_mount_count=$(crypt -l 2> /dev/null | grep \.mausoleum | wc -l | awk '{print $1}')
+  if [ $crypt_mount_count -gt 0 ]
+  then
+    # radioactive == \xe2\x98\xa2
+    echo -e "$COLOR_DARK_GREEN\xe2\x98\xa2$COLOR_GRAY:"
+  fi
+}
+
+prompt_time_on() {
+  export prompt_show_time=1  
+}
+
+prompt_time_off() {
+  unset prompt_show_time
+}
+
+prompt_git_on() {
+  export prompt_show_git=1  
+}
+
+prompt_git_off() {
+  unset prompt_show_git
+}
+
+prompt_deps() {
+  if [ "$(type -t nodejs_dynamic)" == "function" ]
+  then
+    nodejs_dynamic
+  fi
+
+}
+
+PROMPT_COMMAND='PS1="$(prompt_deps)$(prompt_mausoleum)$(print_aws_account)$(prompt_time)$(prompt_virtualenv)$COLOR_LIGHT_BLUE\w$(parse_git_branch)$COLOR_GRAY\072\$(if [[ \$? == 0 ]]; then echo \"$COLOR_GREEN\342\234\223$COLOR_NONE\"; else echo \"$COLOR_RED\342\234\227$COLOR_NONE\"; fi)$COLOR_GRAY\072 $COLOR_NONE";'
+

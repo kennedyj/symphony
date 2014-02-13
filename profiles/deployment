@@ -1,0 +1,23 @@
+#!/bin/bash
+
+### Added for https://github.com/gerhard/deliver
+if [ -e "$HOME/.deliver/" ]
+then
+  export PATH="$HOME/.deliver/bin:$PATH"
+fi
+
+### Added for https://github.com/rerun/rerun
+if [ -e "$HOME/.rerun/" ]
+then
+  export PATH="$HOME/.rerun:$PATH"
+  [ -r $HOME/.rerun/etc/bash_completion.sh ] && source $HOME/.rerun/etc/bash_completion.sh
+  export RERUN_MODULES=$HOME/.rerun/modules
+  [ -t 0 ] && export RERUN_COLOR=true
+fi
+
+### Added by the Heroku Toolbelt
+if [ -e "/usr/local/heroku" ]
+then
+  export PATH="/usr/local/heroku/bin:$PATH"
+fi
+

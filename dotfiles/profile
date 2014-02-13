@@ -1,0 +1,53 @@
+#!/bin/bash
+
+export _EMPTY_SHELL=0
+
+# must haves
+export CLICOLOR=true
+export EDITOR="vim"
+
+# handy alias
+alias tmux='TERM=xterm-256color tmux'
+
+# all the colors, see profiles/prompt
+COLOR_NONE="\[\033[0m\]"
+COLOR_GRAY="\[\033[1;30m\]"
+COLOR_RED="\[\033[0;31m\]"
+COLOR_BLUE="\[\033[0;34m\]"
+COLOR_PURPLE="\[\033[00;35m\]"
+COLOR_GREEN="\[\033[0;32m\]"
+COLOR_YELLOW="\[\033[0;33m\]"
+
+COLOR_LIGHT_RED="\[\033[1;31m\]"
+COLOR_LIGHT_BLUE="\[\033[1;34m\]"
+
+COLOR_DARK_GREEN="\[\033[1;36m\]"
+
+# load the profiles
+if [ "${#EMPTY_SHELL}" -lt 1 ]
+then
+  if [ -e "$HOME/.profiles" ]
+  then
+    for p in $HOME/.profiles/*
+    do
+      [ -f $p ] && . $p
+    done
+  fi
+
+  # Keep your personal stuff in here, like secrets, all the secrets
+  if [ -e "$HOME/.mausoleum" ]
+  then
+    for p in $HOME/.mausoleum/*
+    do
+      [ -f $p ] && . $p
+    done
+  fi
+fi
+
+function aliases() {
+  alias | cut -d '=' -f 1 | awk '{print $2}' | sort -u 
+}
+
+# Add to .profile or .bashrc as needed
+# PROFILE_LOAD="$HOME/git/kennedyj/symphony/dotfiles/profile"
+#[ -s $PROFILE_LOAD ] && . $PROFILE_LOAD

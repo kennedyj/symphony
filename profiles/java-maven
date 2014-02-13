@@ -1,0 +1,36 @@
+#!/bin/bash
+
+function maven_switch() {
+  target=$1
+  current=$(readlink $HOME/.m2 | cut -d '-' -f 2)
+
+  if [ -z $target ]
+  then
+    echo "Current maven environment is $current"
+  else
+    if [ "$target" != "$current" ]
+    then
+      rm $HOME/.m2
+      ln -s $HOME/.m2-$target $HOME/.m2
+    fi
+  fi
+}
+
+# maven config.
+#export M2=$M2_HOME/bin
+export M2_HOME=/usr/local/maven
+export PATH=$M2_HOME/bin:$PATH
+
+export MAVEN_OPTS='-mx1024M'
+
+if [ -e "/usr/libexec/java_home" ]
+then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+fi
+
+# for gradle
+if [ -e "/usr/local/gradle/bin" ]
+then
+  export PATH="$PATH:/usr/local/gradle/bin"
+fi
+

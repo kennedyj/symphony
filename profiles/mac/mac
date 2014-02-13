@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# for mysql bin
+if [ -e "/usr/local/mysql/bin" ]
+then
+  export PATH=$PATH:/usr/local/mysql/bin
+fi
+
+# Extra bin locations
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
+# Extras for OSX
+alias killmenubar="killall SystemUIServer"
+alias killdock="killall Dock"
+alias killfinder="killall Finder"

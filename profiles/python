@@ -1,0 +1,11 @@
+#!/bin/bash
+
+alias py='python'
+
+# For virtualenvwrapper
+if [ -e "/usr/local/bin/virtualenvwrapper.sh" ]
+then
+  source /usr/local/bin/virtualenvwrapper.sh
+fi
+
+export VIRTUALENV_USE_DISTRIBUTE=true

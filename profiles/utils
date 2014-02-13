@@ -1,0 +1,22 @@
+#!/bin/bash
+
+## Utils and bin locations
+# A place for random bash functions and things that add bin locations that aren't
+# in a separate file.
+
+calc(){ awk "BEGIN{ print $* }" ;}
+
+show_colors() { for i in {0..255} ; do     printf "\x1b[38;5;${i}mcolour${i}\n"; done ;}
+
+# load user bin and bash functions
+if [ -e "$HOME/.bin" ]
+then
+  export PATH=$HOME/.bin:$HOME/.bin/cellar-bin:$PATH
+
+  if [ -e "$HOME/.bin/bash" ]
+  then
+    for f in $(ls $HOME/.bin/bash/); do
+      . $HOME/.bin/bash/$f
+    done
+  fi
+fi

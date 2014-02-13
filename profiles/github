@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function github() {
+  action=$1
+  shift
+
+  case $action in
+    'clone' )
+      repo_name=$1
+      shift
+      git clone git@github.com:$repo_name.git $@
+      ;;
+    * )
+      git $action $@
+      ;;
+  esac
+}

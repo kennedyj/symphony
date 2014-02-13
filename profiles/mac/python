@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Setting PATH for Python 2.7
+# The orginal version is saved in .profile.pysave
+if [ -e "/Library/Frameworks/Python.framework/Versions/2.7/bin" ]
+then
+	export PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+fi
+
+# For homebrew if brew install python wasn't done
+if [ -e "/usr/local/lib/python2.7/site-packages" ]
+then
+  export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
+fi

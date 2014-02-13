@@ -1,0 +1,22 @@
+[user]
+	name = Josh Kennedy
+[github]
+	user = kennedyj
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = true
+[alias]
+	st = status
+	ci = commit
+	di = diff
+	co = checkout
+	unstage = reset HEAD
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short

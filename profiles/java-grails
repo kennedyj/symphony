@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -e "$HOME/.local/grails" ]
+then
+  export GRAILS_HOME="$HOME/.local/grails"
+  export PATH="$PATH:$GRAILS_HOME/bin" 
+fi
