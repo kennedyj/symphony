@@ -1,0 +1,34 @@
+{
+	"auto_complete": true,
+	"bold_folder_labels": true,
+	"caret_style": "smooth",
+	"detect_indentation": false,
+	"ensure_newline_at_eof_on_save": true,
+	"font_face": "Source Code Pro",
+	"gutter": true,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"indent_guide_options":
+	[
+		"draw_normal"
+	],
+	"margin": -6,
+	"open_files_in_new_window": false,
+	"overlay_scroll_bars": "enabled",
+	"rulers":
+	[
+		80
+	],
+	"scroll_past_end": true,
+	"scroll_speed": 0,
+	"show_tab_close_buttons": true,
+	"soda_classic_tabs": false,
+	"spell_check": true,
+	"tab_size": 2,
+	"translate_tabs_to_spaces": true,
+	"word_wrap": "true"
+}

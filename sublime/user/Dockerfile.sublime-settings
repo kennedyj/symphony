@@ -1,0 +1,7 @@
+{
+	"extensions":
+	[
+		"Dockerfile"
+	],
+	"syntax": "Dockerfile"
+}

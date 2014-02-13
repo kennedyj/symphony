@@ -1,0 +1,39 @@
+{
+    //Enable bracket matching on type
+    "quote_enable" : true,
+    "curly_enable" : true,
+    "round_enable" : true,
+    "square_enable": true,
+    "angle_enable" : true,
+    // Higlight tags if tag is selected. angle_enable must be true for tags to work
+    // if you would like to ignore non tags then set ignore_non_tags to true
+    "tag_enable"   : true,
+
+    // Scope? (Defined in theme files.)
+    // Examples: (keyword|string|number)
+    "quote_scope" : "keyword.operator",
+    "curly_scope" : "entity.name.function",
+    "round_scope" : "string",
+    "square_scope": "entity.name.class",
+    "angle_scope" : "keyword.operator",
+    "tag_scope"   : "keyword.operator",
+
+    // Outline? (solid|outline|underline|none)
+    "quote_style" : "outline",
+    "curly_style" : "outline",
+    "round_style" : "outline",
+    "square_style": "outline",
+    "angle_style" : "underline",
+    "tag_style"   : "underline",
+
+    // Icon? (dot|circle|bookmark|quote|curly_bracket|round_bracket|square_bracket|angle_bracket|none)
+    "quote_icon" : "quote",
+    "curly_icon" : "dot",
+    "round_icon" : "bookmark",
+    "square_icon": "dot",
+    "angle_icon" : "angle_bracket",
+    "tag_icon"   : "angle_bracket",
+
+    // Higlight brackets of tag only instead of entire tag
+    "tag_brackets_only" : false
+}

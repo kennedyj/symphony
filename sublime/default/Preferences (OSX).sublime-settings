@@ -1,0 +1,22 @@
+{
+  "font_size": 14.0,
+  "color_scheme": "Packages/ThingAlso/thingAlso.tmTheme",
+  // ## Font options
+  // Valid options are "no_bold", "no_italic", "no_antialias", "gray_antialias",
+  // "subpixel_antialias", "no_round" (OS X only), "GDI" (Windows only) and
+  // "directwrite" (Windows only)
+  "font_options": ["no_round"],
+  // # Themes
+  //   See: https://github.com/buymeasoda/soda-theme/wiki/Theme-customisation
+  // ## Elementary Theme
+  //  "theme": "Elementary Light 3.sublime-theme",
+  //  "elementary_folder_icons": true,
+  // ## Phoenix Theme
+  // https://github.com/netatoo/phoenix-theme
+  "theme": "Phoenix Light.sublime-theme",
+  // ### Colors: Light theme : blue, darkblue - Dark Theme : red, green, blue, orange, yellow and pink
+  // "phoenix_color_blue": true,
+  "phoenix_highlight_current_tab": true,
+  "phoenix_dirty_bottom_bar": true,
+  "phoenix_dirty_bottom_bar_red": true,
+}

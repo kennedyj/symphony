@@ -1,0 +1,23 @@
+{
+	"channels":
+	[
+		"https://sublime.wbond.net/channel.json"
+	],
+	"installed_packages":
+	[
+		"All Autocomplete",
+		"Dockerfile Syntax Highlighting",
+		"GitGutter",
+		"INI",
+		"LESS",
+		"Origami",
+		"Package Control",
+		"SideBarEnhancements",
+		"Theme - Phoenix",
+		"ThingAlso"
+	],
+	"repositories":
+	[
+		"https://github.com/kennedyj/ThingAlso"
+	]
+}
