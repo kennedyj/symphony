@@ -9,7 +9,7 @@ then
   rm .vimrc
 
   ln -s $HOME/.symphony/vim $HOME/.vim
-  ln -s $HOME/.vim/configs/rc $HOME/.vimrc
+  ln -s $HOME/.vim/configs/vimrc $HOME/.vimrc
 fi
 
 # remove and install tmux settings

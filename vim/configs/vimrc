@@ -22,7 +22,8 @@ set wildmenu                        " make use of the 'status line' to show comm
 set lz                              " lazy redraw (don't redraw while running macros)
 set backspace=indent,eol,start      " Specify backspacing options
 set backspace=2                     " make backspace work normal
-set whichwrap+=<,>                  " cursor keys can wrap too
+set whichwrap+=<,>,[,]              " cursor keys can wrap too. normal mode <,> insert mode [,]
+set whichwrap+=h,l                  " enable h and l to wrap lines
 set shortmess=atI                   " shortens messages to avoid 'press a key' prompt
 set report=0                        " tell me when anything is changed via :
 
@@ -30,9 +31,8 @@ set ch=2                            " Command line height
 set ic                              " Show incomplete commands
 set showcmd                         " Show Incomplete Commands
 set so=5                            " Set the resistance to scroll
-"set ruler                           " Enable always showing the Position
 
-set smartcase                       " Override ignorecase if the search pattern is typed in
+"set smartcase                       " Override ignorecase if the search pattern is typed in
 set ignorecase                      " Ignore case in pattern searchs
 set hlsearch                        " Switch on search pattern highlighting.
 set showmatch                       " show matching brackets
@@ -41,27 +41,52 @@ set incsearch                       " do 'highlight' as you type your search phr
 set novisualbell                    " don't blink at me
 set noerrorbells                    " don't make a sound
 
-set fo=tcrqn                        " see help deals with formating
+"set formatoptions                   " (default "tcq")
+"set formatoptions=tcqrn             " see help deals with formating
+set formatoptions-=t                 " don't auto wrap long lines
 
-set ai                              " autoindent
-set si                              " smartindent
-set cindent                         " do c-style indenting
+" set a custom text width (80 for python)
+set textwidth=0
+" set a wrap margin how many charecters before the edge to wrap at.
+set wrapmargin=0
+
+set autoindent                      " autoindent
+"set smartindent                     " smartindent
+"set cindent                         " stricter rules for C programs
+
 set tabstop=2                       " set the same (tabstop)
 set shiftwidth=2                    " set the same (tabstop)
 set softtabstop=2                   " set the same (tabstop)
 set cino=2                          " set the same (tabstop)
 set expandtab                       " Expand Tabs to Whitespace
 set nowrap                          " wrap lines
-set number
+set number                          " show line numbers
 
 let g:NERDTreeWinPos = "left"
 
 " sets chars to represent tab,trail... when in list mode; try ':set list'
+" doesn't always need to be used
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 
 " sets status line to display file format, type, current char ascii,hex codes, current cursor position
 set laststatus=2                    " always show the status line
-set statusline=%F%m%r%h%w\ line\ %l\ of\ %L\ (%p%%)\ col\ %v\ \ \ \%03.3b,0x\%02.2B
+"set statusline=%f%m%r%h%w\ line\ %l\ of\ %L\ (%p%%)\ col\ %v\ \ \ \%03.3b,0x\%02.2B
+
+" set the status line
+" checkout http://vimdoc.sourceforge.net/htmldoc/options.html#'statusline'
+set statusline=%f         " Path to the file
+set statusline+=%m%r      " show modified and/or readonly flag
+set statusline+=%w        " show preview flag
+set statusline+=%=        " Switch to the right side
+set statusline+=%l        " Current line
+set statusline+=:         " colon sep
+set statusline+=%v        " current column
+"set statusline+=\%03.3b   " show decimal value of char under cursor
+set statusline+=[\%02.2B] " show hex value of char under cursor
+set statusline+=\         " add a space
+set statusline+=%L        " Total lines
+set statusline+=(%p%%)    " percent of file
+
 
 " turn off folding, but when needed, these options are useful
 set nofoldenable
@@ -76,15 +101,20 @@ set mouset=500
 
 " mouse modes, if you're into that (n=normal, v=visual)
 "set mouse=nv
+"
+" enable Pathogen https://github.com/tpope/vim-pathogen
+execute pathogen#infect()
+" Set nice colors
+syntax enable
+" choose the dark color scheme
+color dark
 
 filetype on                         " detect the type of file
 filetype plugin indent on           " load filetype plugins
 
 set magic                           " Change the special charecters for searching
 set smd                             " Enable Show Mode on the last line
-set cin                             " Enable C Indenting
 set notitle                         " Adding this should prevent the 'Thanks for flying with VIM'
-
 
 " Take care of NumPad
 :imap <Esc>Oq 1
@@ -103,17 +133,29 @@ set notitle                         " Adding this should prevent the 'Thanks for
 :imap <Esc>Ol +
 :imap <Esc>OS -
 
-" Set nice colors
-syntax enable
-color dark
+" for Gundo http://sjl.bitbucket.org/gundo.vim/
+nnoremap <F8> :GundoToggle<CR>
 
 " for toggling paste
 map <F9> :set invpaste<CR>          " Paste Toggle on F9
 map ,p :set invpaste<CR>            " Paste Toggle on ,p
 
+" more page up and down goodness
+map <C-k> <C-b>
+map <C-j> <C-f>
 
 " for perl
 "map ,pl :!clear;perl -cw % <CR>
+
+" vi shortcuts
+" reload vim config
+map ,vr :so $MYVIMRC<CR>
+
+" make shortcuts
+map ,mt :!clear;make test<CR>
+
+" grunt shortcuts
+map ,gt :!clear;grunt test<CR>
 
 " hide and show comments
 map ,sc :highlight Comment term=bold ctermfg=white<CR>
