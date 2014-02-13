@@ -11,7 +11,7 @@ show_colors() { for i in {0..255} ; do     printf "\x1b[38;5;${i}mcolour${i}\n";
 # load user bin and bash functions
 if [ -e "$HOME/.bin" ]
 then
-  export PATH=$HOME/.bin:$HOME/.bin/cellar-bin:$PATH
+  export PATH=$HOME/.bin:$HOME/.bin/symphony:$PATH
 
   if [ -e "$HOME/.bin/bash" ]
   then

@@ -1,0 +1,32 @@
+#!/bin/bash
+pid="$$"
+
+allfiles="/tmp/$pid-allfiles"
+
+# check command line arguments
+if [ -n "$1" ] && [ -z "$2" ]
+then
+  echo "specify what to look for, and what files to look in"
+  exit 1
+fi
+
+# use arguments, or prompt
+if [ -n "$1" ] && [ -n "$2" ]
+then
+  matchon=$1
+  matchfiles=$2
+else
+  read -p "what to look for: " matchon
+  read -p "what files to look in: " matchfiles
+fi
+
+find . -iname "*.$matchfiles" -type f > $allfiles
+
+matched_list=$(grep -Ri $matchon * | cut -d : -f 1 | sort | uniq | grep $matchfiles)
+line_numbers=$(for f in $matched_list; do grep -n $f $allfiles | cut -d : -f 1 | sed 's/$/d/'; done | sort -nr)
+
+for l in $line_numbers; do sed -i '' "$l" $allfiles; done
+
+cat $allfiles
+
+rm $allfiles

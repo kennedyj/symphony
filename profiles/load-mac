@@ -2,11 +2,18 @@
 
 if [ "$(uname -s)" == "Darwin" ]
 then
+  # load the custom profiles
   if [ -e "$HOME/.profiles/mac" ]
   then
     for p in $HOME/.profiles/mac/*
     do
       [ -f $p ] && . $p
     done
+  fi
+
+  # add the mac bin to the path
+  if [ -e "$HOME/.bin/symphony/mac" ]
+  then
+    export PATH=$HOME/.bin/symphony/mac:$PATH
   fi
 fi

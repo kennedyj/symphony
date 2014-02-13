@@ -1,0 +1,23 @@
+#!/bin/bash
+
+file=""
+num=0
+if [ "X" == "X$1" ]; then
+  echo "Usage: removeline file number"
+  echo "                  file:number"
+  exit -1
+else
+  file=$1
+fi
+
+if [ "X" == "X$2" ]; then
+  # Support the file:number
+  file=$(echo "$1" | cut -d ":" -f 1)
+  num=$(echo "$1" | cut -d ":" -f 2)
+else
+  num=$2
+fi
+
+line=$num"d"
+
+sed -i '' "$line" $file
