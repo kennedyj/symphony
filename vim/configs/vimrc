@@ -61,6 +61,7 @@ set cino=2                          " set the same (tabstop)
 set expandtab                       " Expand Tabs to Whitespace
 set nowrap                          " wrap lines
 set number                          " show line numbers
+set nolist                          " turn off list by default
 
 let g:NERDTreeWinPos = "left"
 
