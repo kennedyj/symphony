@@ -10,6 +10,7 @@ set isk+=_,$,@,%,#,-                " none of these should be word dividers
 set diffopt=filler
 set diffopt+=iwhite
 
+set noswapfile                      " don't make the swap files
 set nobackup                        " don't make a backup file
 set noautowrite                     " do not save the file automatically if it changes
 " if using backup, try these
@@ -104,6 +105,7 @@ set notitle                         " Adding this should prevent the 'Thanks for
 
 " Set nice colors
 syntax enable
+color dark
 
 " for toggling paste
 map <F9> :set invpaste<CR>          " Paste Toggle on F9
