@@ -37,7 +37,7 @@ prompt_virtualenv() {
 }
 
 prompt_mausoleum() {
-  crypt_mount_count=$(crypt -l 2> /dev/null | grep \.mausoleum | wc -l | awk '{print $1}')
+  crypt_mount_count=$(/usr/bin/truecrypt -t -l 2> /dev/null | grep \.mausoleum | wc -l | awk '{print $1}')
   if [ $crypt_mount_count -gt 0 ]
   then
     # radioactive == \xe2\x98\xa2
