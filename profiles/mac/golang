@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ -e "/usr/local/Cellar/go/1.2/libexec" ]
+then
+  export GOROOT="/usr/local/Cellar/go/1.2/libexec"
+fi

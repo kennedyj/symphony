@@ -26,28 +26,35 @@ COLOR_DARK_GREEN="\[\033[1;36m\]"
 # load the profiles
 if [ "${#EMPTY_SHELL}" -lt 1 ]
 then
-  if [ -e "$HOME/.profiles" ]
+  # Keep your personal stuff in here, like secrets, all the secrets
+  # I use a truecrypt volume mounted at ~/.mausoleum
+  if [ -e "$HOME/.mausoleum/profiles" ]
   then
-    for p in $HOME/.profiles/*
+    for p in $HOME/.mausoleum/profiles/*
     do
       [ -f $p ] && . $p
     done
   fi
 
-  # Keep your personal stuff in here, like secrets, all the secrets
-  if [ -e "$HOME/.mausoleum" ]
+  # load secondary "less" secure profiles (in my case another repo)
+  if [ -e "$HOME/.cellar/profiles" ]
   then
-    for p in $HOME/.mausoleum/*
+    for p in $HOME/.cellar/profiles/*
+    do
+      [ -f $p ] && . $p
+    done
+  fi
+
+  # load the symphony profiles
+  if [ -e "$HOME/.symphony/profiles" ]
+  then
+    for p in $HOME/.symphony/profiles/*
     do
       [ -f $p ] && . $p
     done
   fi
 fi
 
-function aliases() {
-  alias | cut -d '=' -f 1 | awk '{print $2}' | sort -u 
-}
-
 # Add to .profile or .bashrc as needed
-# PROFILE_LOAD="$HOME/git/kennedyj/symphony/dotfiles/profile"
+# PROFILE_LOAD="$HOME/.symphony/dotfiles/profile"
 #[ -s $PROFILE_LOAD ] && . $PROFILE_LOAD

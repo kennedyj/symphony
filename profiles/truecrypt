@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# on mac run sudo ln -s /Applications/TrueCrypt.app/Contents/MacOS/TrueCrypt /usr/bin/truecrypt
+export TRUECRYPT_COMMAND='/usr/bin/truecrypt -t --protect-hidden=no'
+
+# export MAUSOLEUM_VOLUME to be the path to your truecrypt volume
+# this can be done in .bashrc, .profile, or a cellar profile
+if [ -e "/usr/bin/truecrypt" ]
+then
+  complete -W "mount umount" crypt_secrets
+  function crypt_secrets {
+    mount_point="$HOME/.mausoleum"
+    key_file=""
+
+    command=$1
+
+    if [ -z $command ] || [ "$command" == "mount" ]
+    then
+      $TRUECRYPT_COMMAND $MAUSOLEUM_VOLUME -k "$key_file" $mount_point
+    elif [ "$command" == "umount" ]
+    then
+      $TRUECRYPT_COMMAND -d $MAUSOLEUM_VOLUME
+    fi
+  }
+fi

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# normalize between mac and linux
+alias _open="open"

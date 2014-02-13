@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ "$(uname -s)" == "Linux" ]
+then
+  # load any custom ubuntu profiles
+  if [ -e "$HOME/.symphony/profiles/ubuntu" ]
+  then
+    for p in $HOME/.symphony/profiles/ubuntu/*
+    do
+      [ -f $p ] && . $p
+    done
+  fi
+
+  # add any ubuntu specific scripts to the path
+  if [ -e "$HOME/.symphony/bin/ubuntu" ]
+  then
+    export PATH=$HOME/.symphony/bin/ubuntu:$PATH
+  fi
+fi

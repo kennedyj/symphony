@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# only load these if wallet is installed
+if [ -e "/Applications/Wallet.app" ]
+then
+
+# setup path to the applications expected path
+export wallet_db="/Users/$(whoami)/Library/Containers/com.acrylic.Wallet/Data/Library/Application Support/Wallet/Database.wallet"
+
+# this file should include your list of wallet databases
+WALLET_DBS=$HOME/.cellar/wallet/databases
+
+# here for examples and fall back
+# done this way since bash 4 on mac wasn't stable at the time I wrote this
+export wallet_db_list=( personal shared )
+
+# wallet_$NAME_db, name comes from above list
+export wallet_personal_db="$HOME/.wallet/Personal.wallet"
+export wallet_shared_db="$HOME/.wallet/Shared.wallet"
+
+# load in your key list
+if [ -e "$WALLET_DBS" ]
+then
+  . $WALLET_DBS
+fi
+
+
+# allow quick switching between wallets. Make sure wallet is closed when 
+# you switch
+wallet_use() {
+  if [ "$wallet_current_name" == "$1" ]
+  then
+    echo "already using that wallet"
+  else
+    export wallet_current_name=$1
+    name="wallet_$1_db"
+    eval target=\${$name}
+    if [ ! -e "$target" ];
+    then
+      echo "$1 doesn't exist."
+    else
+      ln -f "$target" "$wallet_db"
+      echo "Switched to $1"
+    fi
+  fi
+}
+
+# identify what wallet file you are currently using
+wallet_current() {
+  do_echo=$1
+
+  if [ -z "$do_echo" ]
+  then
+    do_echo=true
+  fi
+
+  # clear the current name
+  unset wallet_current_name
+
+  # prep some variables
+  _wallet_prefix="wallet_"
+  _wallet_suffix="_db"
+
+  # get the inode for the current wallet
+  wallet_db_inode=$(ls -il "$wallet_db" | awk '{print $1'})
+  for name in ${wallet_db_list[@]}
+  do
+    eval _wallet_target=\${"$_wallet_prefix$name$_wallet_suffix"}
+
+    # get inode for wallet
+    wallet_name_inode=$(ls -il "$_wallet_target" | awk '{print $1'})
+
+    if [ "$wallet_db_inode" == "$wallet_name_inode" ]
+    then
+      export wallet_current_name=$name
+      break
+    fi
+  done
+
+  if [ $do_echo == true ]
+  then
+    if [ -z "$wallet_current_name" ]
+    then
+      echo "Current wallet doesn't match a configured one"
+    else
+      echo "Using '$wallet_current_name'"
+    fi
+  fi
+}
+
+wallet_current false
+
+fi

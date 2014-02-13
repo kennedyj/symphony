@@ -1,0 +1,136 @@
+#!/bin/bash
+
+# change these variables as needed
+KEY_PAIRS=$HOME/.mausoleum/aws/key-pairs
+AWS_USER="ubuntu"
+
+ACCOUNT_LIST="prod dev"
+REGION_LIST="us-west-1 us-east-1 eu-west-1"
+
+# change as needed for your setup
+export AWS_PEM_PATH="$HOME/.mausoleum/ssh"
+
+# load in your key list
+if [ -e "$KEY_PAIRS" ]
+then
+  . $KEY_PAIRS
+fi
+
+# normalize the aws tool paths
+export AWS_AUTO_SCALING_HOME="/usr/local/autoscaling"
+export AWS_RDS_HOME="/usr/local/rds-cli"
+export AWS_CLOUDFORMATION_HOME="/usr/local/cloudformation"
+export AWS_IAM_HOME="/usr/local/iam-cli"
+export EC2_HOME="/usr/local/ec2-api-tools"
+
+# for new api tools
+export EC2_PRIVATE_KEY="$AWS_PEM_PATH/$USER-private-key.pem"
+export EC2_CERT="$AWS_PEM_PATH/$USER-certificate.pem"
+
+# add the aws tools to the path
+export PATH="$PATH:${AWS_AUTO_SCALING_HOME}/bin:${AWS_RDS_HOME}/bin:${AWS_CLOUDFORMATION_HOME}/bin:${EC2_HOME}/bin:${AWS_IAM_HOME}/bin"
+
+# prod ssh aliases
+alias ese='ssh $PROD_US_EAST_1 -l $AWS_USER'
+alias esw='ssh $PROD_US_WEST_1 -l $AWS_USER'
+alias esu='ssh $PROD_EU_WEST_1 -l $AWS_USER'
+alias esv='ssh $PROD_VPC -l $AWS_USER'
+
+# dev ssh aliases
+alias ede='ssh $DEV_US_EAST_1 -l $AWS_USER'
+alias edw='ssh $DEV_US_WEST_1 -l $AWS_USER'
+alias edu='ssh $DEV_EU_WEST_1 -l $AWS_USER'
+alias edv='ssh $DEV_VPC -l $AWS_USER'
+
+alias ece='scp $PROD_US_EAST_1'
+alias ecw='scp $PROD_US_WEST_1'
+
+# Add host names to all commands that ssh
+if [ -e "$HOME/.ssh/known_hosts" ]
+then
+  for c in ssh ese esw esv esu esv ece ecw ede edw edu edv
+  do
+    if [ -e "$HOME/.ssh/config" ]
+    then
+      complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g | uniq | grep -v "\[" | grep -v "%" `; echo `grep "Host " ~/.ssh/config | cut -d " " -f 2`)" $c
+    else
+      complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g | uniq | grep -v "\[" | grep -v "%"` )" $c
+    fi
+  done
+fi
+
+complete -W "$ACCOUNT_LIST" aws_account_set
+complete -W "$REGION_LIST" aws_region_set
+
+aws_account_unset() {
+  unset aws_account
+  unset AWS_ACCESS_KEY_ID
+  unset AWS_SECRET_ACCESS_KEY
+  unset AWS_ACCESS_KEY
+  unset AWS_SECRET_KEY
+
+  if [ -e "$HOME/.s3cfg" ]
+  then
+    rm $HOME/.s3cfg
+  fi
+
+  rm $AWS_CREDENTIAL_FILE &> /dev/null
+  unset AWS_CREDENTIAL_FILE
+}
+
+# functions to set aws account
+aws_account_set() {
+  name=$1
+  export aws_account=$name
+
+  eval AWS_ACCESS_KEY_ID=\${$aws_account[0]}
+  eval AWS_SECRET_ACCESS_KEY=\${$aws_account[1]}
+  # for the ec2 tools
+  eval AWS_ACCESS_KEY=\${$aws_account[0]}
+  eval AWS_SECRET_KEY=\${$aws_account[1]}
+
+  eval account_number=\${$aws_account[2]}
+  eval default_region=\${$aws_account[3]}
+
+  aws_region_set $default_region
+
+  export AWS_ACCESS_KEY_ID
+  export AWS_SECRET_ACCESS_KEY
+
+  # for the ec2 tools
+  export AWS_ACCESS_KEY
+  export AWS_SECRET_KEY
+
+  # for the cloudformation tools
+  export AWS_CREDENTIAL_FILE="$AWS_PEM_PATH/cloudformation-credentials-$aws_account.pek"
+
+  if [ -h "$HOME/.s3cfg" ]
+  then
+    rm $HOME/.s3cfg
+  fi
+  ln -s $HOME/.mausoleum/s3cmd/$aws_account $HOME/.s3cfg
+
+cat > $AWS_CREDENTIAL_FILE <<EOF
+AWSAccessKeyId=$AWS_ACCESS_KEY_ID
+AWSSecretKey=$AWS_SECRET_ACCESS_KEY
+EOF
+}
+
+aws_account_get() {
+  echo $aws_account
+  echo $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+}
+
+aws_region_set() {
+  region=$1
+  export AWS_REGION=$region
+  export AWS_DEFAULT_REGION=$region
+}
+
+aws_region_get() {
+  echo $AWS_REGION
+}
+
+aws_region_list() {
+  echo $REGION_LIST
+}

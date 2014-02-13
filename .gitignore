@@ -1,5 +1,10 @@
+# for mac
+.DS_Store
+
+# git ignores
 git/config
 
+# sublime ignores
 sublime/user/Package Control.cache
 sublime/user/Package Control.last-run
 sublime/user/Package Control.system-ca-bundle
@@ -8,3 +13,5 @@ sublime/user/Side Bar.sublime-settings
 sublime/user/GoSublime/
 sublime/user/GoSublime-aux.sublime-settings
 
+# vim ignores
+vim/.netrwhist
