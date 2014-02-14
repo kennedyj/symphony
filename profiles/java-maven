@@ -1,19 +1,77 @@
 #!/bin/bash
 
-function maven_switch() {
-  target=$1
-  current=$(readlink $HOME/.m2 | cut -d '-' -f 2)
+function mvn_manage() {
+  command=$1
+  target=$2
+  current=$(basename $(readlink $HOME/.m2))
 
-  if [ -z $target ]
+  if [ ! -e "$HOME/.m2env" ]
   then
-    echo "Current maven environment is $current"
-  else
-    if [ "$target" != "$current" ]
-    then
-      rm $HOME/.m2
-      ln -s $HOME/.m2-$target $HOME/.m2
-    fi
+    mkdir -p $HOME/.m2env
   fi
+
+  case $command in
+    create)
+      if [ -z $target ] || [ -e "$HOME/.m2env/$target" ]
+      then
+        echo "Specify a new environment to create"
+      else
+        mkdir -p "$HOME/.m2env/$target" 
+      fi
+      ;;
+    remove)
+      read -p "Remove '$target' environment (can not be undone)? [y,n] " -n 1 -r
+      echo    # (optional) move to a new line
+      if [[ $REPLY =~ ^[Yy]$ ]]
+      then
+        rm -rf "$HOME/.m2env/$target/"
+      fi
+      ;;
+    switch)
+      if [ -z $target ]
+      then
+        echo "Specify a new target environment"
+      else
+        if [ "$target" != "$current" ]
+        then
+          rm $HOME/.m2
+          ln -s $HOME/.m2env/$target $HOME/.m2
+        fi
+      fi
+      ;;
+    help | --help)
+      cat <<EOF
+Manage maven environments
+
+usage: mvn_manage [--help] <command> [<args>]
+
+  list      show the avaliable targets (default command)
+  switch    change to a different environment
+  create    create a new maven environment
+  remove    delete a maven environment
+  help      this message
+EOF
+      ;;
+    *)
+      if [ -z $command ] || [ "$command" == "list" ] || [ "$command" == "current" ]
+      then
+        for d in $HOME/.m2env/*
+        do
+          name=$(basename $d)
+          if [ "$current" == "$name" ]
+          then
+            thisone=" (current)"
+          else
+            thisone=""
+          fi
+
+          echo "* $name$thisone"
+        done
+      else
+        echo "mvn_manage: '$command' is not a valid command. See 'mvn_manage --help'."
+      fi
+      ;;
+  esac
 }
 
 # maven config.
