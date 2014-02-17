@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo apt-get install -y build-essential vim git network-manager-openvpn-gnome chromium-browser chromium-codecs-ffmpeg flashplugin-installer ctags vim-scripts vim-addon-manager libgnome2-bin curl gimp wget
+
