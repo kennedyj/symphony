@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+
+brew update
+brew install wget
+brew install git
+brew install tmux

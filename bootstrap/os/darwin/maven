@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd /tmp
+wget 'http://mirror.reverse.net/pub/apache/maven/maven-3/3.1.0/binaries/apache-maven-3.1.0-bin.tar.gz' -O $HOME/Downloads/
+tar zxf $HOME/Downloads/apache-maven-3.0.5-bin.tar.gz
+sudo mv $HOME/apache-maven-* /usr/local
+sudo ln -s /usr/local/apache-maven-3.0.5 /usr/local/maven
+mkdir -p $HOME/.m2
+ln -s $HOME/.mausoleum/maven/settings.xml $HOME/.m2/settings.xml
+ln -s $HOME/.mausoleum/maven/settings-security.xml $HOME/.m2/settings-security.xml

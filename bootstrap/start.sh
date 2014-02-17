@@ -29,9 +29,9 @@ fi
 OS_NAME=$(uname -s | awk '{print tolower($0)}')
 
 # do platform specific things
-if [ -e "$HOME/.symphony/bootstrap/os/$OS_NAME" ]
+if [ -e "$HOME/.symphony/bootstrap/os/$OS_NAME.sh" ]
 then
-  bash $HOME/.symphony/bootstrap/os/$OS_NAME
+  bash $HOME/.symphony/bootstrap/os/$OS_NAME.sh
 fi
 
 bash $HOME/.symphony/fonts/install.sh
