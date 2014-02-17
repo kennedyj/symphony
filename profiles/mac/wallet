@@ -12,11 +12,8 @@ WALLET_DBS=$HOME/.cellar/wallet/databases
 
 # here for examples and fall back
 # done this way since bash 4 on mac wasn't stable at the time I wrote this
-export wallet_db_list=( personal shared )
-
-# wallet_$NAME_db, name comes from above list
-export wallet_personal_db="$HOME/.wallet/Personal.wallet"
-export wallet_shared_db="$HOME/.wallet/Shared.wallet"
+export wallet_list=( personal shared )
+export wallet_files=( "$HOME/.wallet/Personal.wallet" "$HOME/.wallet/Shared.wallet" )
 
 # load in your key list
 if [ -e "$WALLET_DBS" ]
@@ -24,23 +21,65 @@ then
   . $WALLET_DBS
 fi
 
+# do autocomplete for the wallet list
+complete -W "$(echo ${wallet_list[@]})" wallet_manage
 
 # allow quick switching between wallets. Make sure wallet is closed when 
 # you switch
-wallet_use() {
-  if [ "$wallet_current_name" == "$1" ]
+wallet_manage() {
+  # set the name, just in case
+  wallet_current false
+
+  # if no parameter is passed in, or list show the list
+  if [ -z $1 ] || [ "$1" == "list" ]
   then
-    echo "already using that wallet"
+    i=1
+    for name in ${wallet_list[@]}
+    do
+      # check if the current wallet is this one
+      if [ "$name" == "$wallet_current_name" ]
+      then
+        current=" (selected)"
+      else
+        current=""
+      fi
+      # show the wallets
+      echo " $i. $name$current"
+
+      i=$(expr $i + 1)
+    done
   else
-    export wallet_current_name=$1
-    name="wallet_$1_db"
-    eval target=\${$name}
-    if [ ! -e "$target" ];
+    # allow selecting by number or name
+    re='^[0-9]+$'
+    if [[ $1 =~ $re ]]
     then
-      echo "$1 doesn't exist."
+      index=$(expr $1 - 1)
+      name=${wallet_list[$index]}
     else
-      ln -f "$target" "$wallet_db"
-      echo "Switched to $1"
+      # get the index number (simplifies the file selection)
+      for (( i = 0; i < ${#wallet_list[@]}; i++ )); do
+        if [ "${wallet_list[$i]}" == "$1" ]; then
+          index=$i
+          name=$1
+          break
+        fi
+      done
+    fi
+
+    if [ "$wallet_current_name" == "$name" ]
+    then
+      echo "already using that wallet."
+    else
+      target=${wallet_files[$index]}
+
+      if [ ! -e "$target" ];
+      then
+        echo "'$name' doesn't exist."
+      else
+        ln -f "$target" "$wallet_db"
+        export wallet_current_name=$name
+        echo "Switched to '$name'"
+      fi
     fi
   fi
 }
@@ -57,22 +96,18 @@ wallet_current() {
   # clear the current name
   unset wallet_current_name
 
-  # prep some variables
-  _wallet_prefix="wallet_"
-  _wallet_suffix="_db"
-
   # get the inode for the current wallet
-  wallet_db_inode=$(ls -il "$wallet_db" | awk '{print $1'})
-  for name in ${wallet_db_list[@]}
+  current_inode=$(ls -il "$wallet_db" | awk '{print $1'})
+  for (( i = 0; i < ${#wallet_files[@]}; i++ ))
   do
-    eval _wallet_target=\${"$_wallet_prefix$name$_wallet_suffix"}
+    target=${wallet_files[$i]}
 
     # get inode for wallet
-    wallet_name_inode=$(ls -il "$_wallet_target" | awk '{print $1'})
+    target_inode=$(ls -il "$target" | awk '{print $1'})
 
-    if [ "$wallet_db_inode" == "$wallet_name_inode" ]
+    if [ "$current_inode" == "$target_inode" ]
     then
-      export wallet_current_name=$name
+      export wallet_current_name=${wallet_list[$i]}
       break
     fi
   done
