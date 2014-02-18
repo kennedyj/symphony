@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# description: add some alias to add vim commands to bash
+
+alias :q="logout"
+alias :qa="logout"
+alias :w="echo \"not editing a file\"; false"
