@@ -4,8 +4,21 @@
 KEY_PAIRS=$HOME/.mausoleum/aws/key-pairs
 AWS_USER="ubuntu"
 
+# START example of what goes in key-pairs file
 ACCOUNT_LIST="prod dev"
 REGION_LIST="us-west-1 us-east-1 eu-west-1"
+
+PROD_US_EAST_1="-i $AWS_PEM_PATH/prod-us-east.pem"
+PROD_US_WEST_1="-i $AWS_PEM_PATH/prod-us-east.pem"
+PROD_EU_WEST_1="-i $AWS_PEM_PATH/prod-eu-west.pem"
+
+DEV_US_EAST_1="-i $AWS_PEM_PATH/dev-us-east.pem"
+DEV_US_WEST_1="-i $AWS_PEM_PATH/dev-us-west.pem"
+DEV_EU_WEST_1="-i $AWS_PEM_PATH/dev-eu-west.pem"
+
+PROD_VPC="-i $AWS_PEM_PATH/prod-vpc.pem"
+DEV_VPC="-i $AWS_PEM_PATH/dev-vpc.pem"
+# END example of key-pairs
 
 # change as needed for your setup
 export AWS_PEM_PATH="$HOME/.mausoleum/ssh"

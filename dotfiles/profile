@@ -56,5 +56,7 @@ then
 fi
 
 # Add to .profile or .bashrc as needed
+# export the _SERVER_ENV variable to not load desktop centric profiles
+# # export _SERVER_ENV=true
 # PROFILE_LOAD="$HOME/.symphony/dotfiles/profile"
 #[ -s $PROFILE_LOAD ] && . $PROFILE_LOAD

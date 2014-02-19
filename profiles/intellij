@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -z $_SERVER_ENV ]
+then
+  return 0
+fi
+
 if [ -e "$HOME/.local/intellij" ]
 then
   export PATH="$PATH:$HOME/.local/intellij/bin"
