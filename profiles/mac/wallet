@@ -24,7 +24,7 @@ fi
 # do autocomplete for the wallet list
 complete -W "$(echo ${wallet_list[@]})" wallet_manage
 
-# allow quick switching between wallets. Make sure wallet is closed when 
+# allow quick switching between wallets. Make sure wallet is closed when
 # you switch
 wallet_manage() {
   # set the name, just in case

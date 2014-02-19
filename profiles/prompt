@@ -1,6 +1,11 @@
 #!/bin/bash
 
-export prompt_show_git=1  
+export prompt_show_git=1
+
+if [ -z $PROMPT_SHRINK_AT ]
+then
+  export PROMPT_SHRINK_AT=80
+fi
 
 # \072 == :
 # for getting the git branch
@@ -10,15 +15,25 @@ parse_git_branch() {
     BRANCH_NAME=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e "s~* \(.*\)~\1~"`
     if [ "${#BRANCH_NAME}" -gt 0 ]
     then
-      echo -e "$COLOR_GRAY\072$COLOR_PURPLE$BRANCH_NAME$COLOR_NONE"
+      if [[ $(tput cols) -lt $PROMPT_SHRINK_AT ]]; then
+        short=$(echo $BRANCH_NAME | cut -c1-1)
+        echo -e "$COLOR_PURPLE$short$COLOR_NONE"
+      else
+        echo -e "$COLOR_GRAY\072$COLOR_PURPLE$BRANCH_NAME$COLOR_NONE"
+      fi
     fi
   fi
 }
 
 print_aws_account() {
   if [ "${#aws_account}" -gt 0 ]
-  then 
-    echo -e "$COLOR_LIGHT_RED$aws_account$COLOR_GRAY\072$COLOR_PURPLE$AWS_REGION$COLOR_GRAY\072$COLOR_NONE"
+  then
+    if [[ $(tput cols) -lt $PROMPT_SHRINK_AT ]]; then
+      short=$(echo $aws_account | cut -c1-2)
+      echo -e "$COLOR_LIGHT_RED$short$COLOR_NONE"
+    else
+      echo -e "$COLOR_LIGHT_RED$aws_account$COLOR_GRAY\072$COLOR_PURPLE$AWS_REGION$COLOR_GRAY\072$COLOR_NONE"
+    fi
   fi
 }
 
@@ -32,11 +47,20 @@ prompt_time() {
 prompt_virtualenv() {
   if [ -n "$VIRTUAL_ENV" ]
   then
-    echo -e "$COLOR_GREEN$(basename $VIRTUAL_ENV)$COLOR_GRAY:"
+    if [[ $(tput cols) -lt $PROMPT_SHRINK_AT ]]; then
+      short=$(basename $VIRTUAL_ENV | cut -c1-1)
+      echo -e "$COLOR_GREEN$short$COLOR_NONE"
+    else
+      echo -e "$COLOR_GREEN$(basename $VIRTUAL_ENV)$COLOR_GRAY:"
+    fi
   fi
 }
 
 prompt_mausoleum() {
+  if [[ $(tput cols) -lt $PROMPT_SHRINK_AT ]]; then
+    return
+  fi
+
   crypt_mount_count=$(/usr/bin/truecrypt -t -l 2> /dev/null | grep \.mausoleum | wc -l | awk '{print $1}')
   if [ $crypt_mount_count -gt 0 ]
   then
@@ -46,7 +70,7 @@ prompt_mausoleum() {
 }
 
 prompt_time_on() {
-  export prompt_show_time=1  
+  export prompt_show_time=1
 }
 
 prompt_time_off() {
@@ -54,7 +78,7 @@ prompt_time_off() {
 }
 
 prompt_git_on() {
-  export prompt_show_git=1  
+  export prompt_show_git=1
 }
 
 prompt_git_off() {
@@ -69,5 +93,28 @@ prompt_deps() {
 
 }
 
-PROMPT_COMMAND='PS1="$(prompt_deps)$(prompt_mausoleum)$(print_aws_account)$(prompt_time)$(prompt_virtualenv)$COLOR_LIGHT_BLUE\w$(parse_git_branch)$COLOR_GRAY\072\$(if [[ \$? == 0 ]]; then echo \"$COLOR_GREEN\342\234\223$COLOR_NONE\"; else echo \"$COLOR_RED\342\234\227$COLOR_NONE\"; fi)$COLOR_GRAY\072 $COLOR_NONE";'
+prompt_cdir() {
+  if [[ $(tput cols) -lt $PROMPT_SHRINK_AT ]]; then
+    # get the current dir, and remove home if it's there
+    arr=$(echo "$(pwd | sed "s~$HOME~~")" | tr "/" "\n")
+    bn=$(basename `pwd`)
+    np=""
+
+    for x in $arr
+    do
+      if [ "$x" == "$bn" ]; then
+        np+=$bn
+      else
+        np+="$(echo $x | cut -c1-1)/"
+      fi
+    done
+
+    # return the shortened path
+    echo "$COLOR_GRAY\072$COLOR_LIGHT_BLUE$np"
+  else
+    echo "$COLOR_LIGHT_BLUE\w"
+  fi
+}
+
+PROMPT_COMMAND='PS1="$(prompt_deps)$(prompt_mausoleum)$(print_aws_account)$(prompt_time)$(prompt_virtualenv)$(parse_git_branch)$(prompt_cdir)$COLOR_GRAY\072\$(if [[ \$? == 0 ]]; then echo \"$COLOR_GREEN\342\234\223$COLOR_NONE\"; else echo \"$COLOR_RED\342\234\227$COLOR_NONE\"; fi)$COLOR_GRAY\072 $COLOR_NONE";'
 

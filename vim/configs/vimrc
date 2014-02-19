@@ -64,8 +64,9 @@ set number                          " show line numbers
 set nolist                          " turn off list by default
 
 "" nerd tree settings
-" bind ctrl+n to toggle the tree
-map <C-n> :NERDTreeToggle<CR>
+" bind alt/meta/option+n to toggle the tree
+map <A-n> :NERDTreeToggle<CR>
+map n :NERDTreeToggle<CR>
 
 " tabs
 set tabpagemax=15                   " allow 15 tabs to be open
@@ -170,7 +171,14 @@ map <C-j> <C-f>
 
 " for perl
 "map ,pl :!clear;perl -cw % <CR>
+" enable/disable spell check
+command SpellOn setlocal spell spelllang=en_us
+command SpellOff setlocal nospell
 map ,sp <ESC>:setlocal spell spelllang=en_us<CR>
+
+" auto-complete and omnicomplete
+" see :help ins-completion and :help complete
+set omnifunc=syntaxcomplete#Complete
 
 " vi shortcuts
 " reload vim configuration
