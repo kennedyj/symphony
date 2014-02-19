@@ -170,9 +170,10 @@ map <C-j> <C-f>
 
 " for perl
 "map ,pl :!clear;perl -cw % <CR>
+map ,sp <ESC>:setlocal spell spelllang=en_us<CR>
 
 " vi shortcuts
-" reload vim config
+" reload vim configuration
 map ,vr :so $MYVIMRC<CR>
 
 " make shortcuts
@@ -187,5 +188,25 @@ map ,hc :highlight Comment term=bold ctermfg=darkgray<CR>
 map ,nc :highlight Comment term=bold ctermfg=black<CR>
 
 nnoremap <F10> :set invhls<CR>:let @/="<C-r><C-w>"<CR>/<BS>
+
+" for vim-airline status line
+let g:airline_theme='bubblegum'     " i prefer pastels
+let g:airline_left_sep=''           " remove the left separator, cause who needs special fonts!
+let g:airline_right_sep=''          " same as above, but for the right
+
+let g:airline#extensions#tabline#enabled = 1           " always show the tab line
+let g:airline#extensions#tabline#left_sep = ''         " remove the tab line left separator
+let g:airline#extensions#tabline#right_sep = ''        " same as above, but for the right
+let g:airline#extensions#tabline#left_alt_sep = ''     " remove the left alternate separator
+
+" for patching the theme
+"let g:airline_theme_patch_func = 'AirlineThemePatch'
+"function! AirlineThemePatch(palette)
+"  if g:airline_theme == 'badwolf'
+"    for colors in values(a:palette.inactive)
+"      let colors[3] = 245
+"    endfor
+"  endif
+"endfunction
 
 " vim:set ts=2 sw=2 nowrap:
