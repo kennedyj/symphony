@@ -1,4 +1,24 @@
 set nocompatible                    " get out of vi-compatible mode
+
+" start the plugins!
+" each bundle is specifically loaded, just comment one out to not load it
+
+" folder tree
+set rtp+=~/.vim/bundle/nerdtree/
+" for the status line
+set rtp+=~/.vim/bundle/vim-airline/
+" visualize the vim undo history
+set rtp+=~/.vim/bundle/gundo/
+" git integration
+set rtp+=~/.vim/bundle/fugitive/
+" add or replace quotes/tags/parens around stuff 
+set rtp+=~/.vim/bundle/surround/
+
+" for python development
+set rtp+=~/.vim/bundle/pyflakes/
+set rtp+=~/.vim/bundle/pydoc/
+
+" end plugins
 set history=1000                    " remember 1000 lines of history
 set undolevels=500                  " make sure I can revert back any changes
 set clipboard+=unnamed              " share clipboard among vi windows
@@ -75,9 +95,10 @@ set tabpagemax=15                   " allow 15 tabs to be open
 " on mac make sure the meta key sends esc for these to work
 map - :tabp<CR>
 map = :tabn<CR>
-" not sure which I like more..
-map ^[n :tabnew<CR>
 map + :tabnew<CR>
+" map ctrl - and + to buffer prev and next respectivly
+map  :bprev<CR>
+map = :bnext<CR>
 
 " windows and buffers
 set swb=useopen,usetab
@@ -126,9 +147,8 @@ set mouset=500
 
 " mouse modes, if you're into that (n=normal, v=visual)
 "set mouse=nv
-"
-" enable Pathogen https://github.com/tpope/vim-pathogen
-execute pathogen#infect()
+
+
 " Set nice colors
 syntax enable
 " choose the dark color scheme
@@ -172,8 +192,8 @@ map <C-j> <C-f>
 " for perl
 "map ,pl :!clear;perl -cw % <CR>
 " enable/disable spell check
-command SpellOn setlocal spell spelllang=en_us
-command SpellOff setlocal nospell
+command! SpellOn setlocal spell spelllang=en_us
+command! SpellOff setlocal nospell
 map ,sp <ESC>:setlocal spell spelllang=en_us<CR>
 
 " auto-complete and omnicomplete
@@ -202,10 +222,15 @@ let g:airline_theme='bubblegum'     " i prefer pastels
 let g:airline_left_sep=''           " remove the left separator, cause who needs special fonts!
 let g:airline_right_sep=''          " same as above, but for the right
 
+let g:airline#extensions#tabline#show_tab_nr = 1       " show tabe numbers
+let g:airline#extensions#tabline#tab_nr_type = 1       " use tab number
 let g:airline#extensions#tabline#enabled = 1           " always show the tab line
 let g:airline#extensions#tabline#left_sep = ''         " remove the tab line left separator
 let g:airline#extensions#tabline#right_sep = ''        " same as above, but for the right
 let g:airline#extensions#tabline#left_alt_sep = ''     " remove the left alternate separator
+
+let g:airline#extensions#tabline#show_buffers = 1      " show buffers
+let g:airline#extensions#tabline#buffer_nr_show = 1    " show buffer numbers
 
 " for patching the theme
 "let g:airline_theme_patch_func = 'AirlineThemePatch'
