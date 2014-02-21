@@ -1,24 +1,33 @@
 set nocompatible                    " get out of vi-compatible mode
 
-" start the plugins!
-" each bundle is specifically loaded, just comment one out to not load it
+" local vimrc configuration
+" TODO need to figure out where I want this to be
+let s:localrc = expand($HOME . '/.vimrc.local')
+if filereadable(s:localrc)
+  exec ':so ' . s:localrc
+endif
 
-" folder tree
-set rtp+=~/.vim/bundle/nerdtree/
-" for the status line
-set rtp+=~/.vim/bundle/vim-airline/
-" visualize the vim undo history
-set rtp+=~/.vim/bundle/gundo/
-" git integration
-set rtp+=~/.vim/bundle/fugitive/
-" add or replace quotes/tags/parens around stuff 
-set rtp+=~/.vim/bundle/surround/
+" declare with configs to load
+" you can override this in your local settings
+if ! exists('g:local_configs')
+  let g:local_configs = ['plugins', 'airline', 'nerdtree', 'mappings', 'python', 'numpad', 'status']
+endif
 
-" for python development
-set rtp+=~/.vim/bundle/pyflakes/
-set rtp+=~/.vim/bundle/pydoc/
+" change this if you want to load your files from elsewhere
+if ! exists('g:local_config_path')
+  let g:local_config_path = $HOME . '/.vim/configs/'
+endif
 
-" end plugins
+for cf in g:local_configs
+  let f = expand(g:local_config_path . cf . '.vim')
+  if filereadable(f)
+    exec ':so ' . f
+  endif
+endfor
+
+filetype on                         " detect the type of file
+filetype plugin indent on           " load filetype plugins
+
 set history=1000                    " remember 1000 lines of history
 set undolevels=500                  " make sure I can revert back any changes
 set clipboard+=unnamed              " share clipboard among vi windows
@@ -83,30 +92,13 @@ set nowrap                          " wrap lines
 set number                          " show line numbers
 set nolist                          " turn off list by default
 
-"" nerd tree settings
-" bind alt/meta/option+n to toggle the tree
-map <A-n> :NERDTreeToggle<CR>
-map n :NERDTreeToggle<CR>
-
 " tabs
 set tabpagemax=15                   " allow 15 tabs to be open
-
-" map alt/meta + [ ] n to tab prev, next and new
-" on mac make sure the meta key sends esc for these to work
-map - :tabp<CR>
-map = :tabn<CR>
-map + :tabnew<CR>
-" map ctrl - and + to buffer prev and next respectivly
-map  :bprev<CR>
-map = :bnext<CR>
 
 " windows and buffers
 set swb=useopen,usetab
 set splitbelow                      " send the split down
 set splitright                      " send the split right
-
-" misc
-map <C-d> :q<CR>
 
 " sets chars to represent tab,trail... when in list mode; try ':set list'
 " doesn't always need to be used
@@ -114,25 +106,6 @@ set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 
 " sets status line to display file format, type, current char ascii,hex codes, current cursor position
 set laststatus=2                    " always show the status line
-"set statusline=%f%m%r%h%w\ line\ %l\ of\ %L\ (%p%%)\ col\ %v\ \ \ \%03.3b,0x\%02.2B
-
-" set the status line
-" checkout http://vimdoc.sourceforge.net/htmldoc/options.html#'statusline'
-set statusline=%n                   " buffer number
-set statusline+=\)                  " parentheses separator
-set statusline+=%f                  " path to the file
-set statusline+=%m%r                " show modified and/or readonly flag
-set statusline+=%w                  " show preview flag
-set statusline+=%=                  " switch to the right side
-set statusline+=%l                  " vurrent line
-set statusline+=:                   " colon sep
-set statusline+=%v                  " current column
-"set statusline+=\%03.3b            " show decimal value of char under cursor
-set statusline+=[\%02.2B]           " show hex value of char under cursor
-set statusline+=\                   " add a space
-set statusline+=%L                  " total lines
-set statusline+=(%p%%)              " percent of file
-
 
 " turn off folding, but when needed, these options are useful
 set nofoldenable
@@ -148,49 +121,15 @@ set mouset=500
 " mouse modes, if you're into that (n=normal, v=visual)
 "set mouse=nv
 
-
 " Set nice colors
 syntax enable
 " choose the dark color scheme
 color dark
 
-filetype on                         " detect the type of file
-filetype plugin indent on           " load filetype plugins
-
 set magic                           " Change the special charecters for searching
 set smd                             " Enable Show Mode on the last line
 set notitle                         " Adding this should prevent the 'Thanks for flying with VIM'
 
-" Take care of NumPad
-:imap <Esc>Oq 1
-:imap <Esc>Or 2
-:imap <Esc>Os 3
-:imap <Esc>Ot 4
-:imap <Esc>Ou 5
-:imap <Esc>Ov 6
-:imap <Esc>Ow 7
-:imap <Esc>Ox 8
-:imap <Esc>Oy 9
-:imap <Esc>Op 0
-:imap <Esc>On .
-:imap <Esc>OQ /
-:imap <Esc>OR *
-:imap <Esc>Ol +
-:imap <Esc>OS -
-
-" for Gundo http://sjl.bitbucket.org/gundo.vim/
-nnoremap <F8> :GundoToggle<CR>
-
-" for toggling paste
-map <F9> :set invpaste<CR>          " Paste Toggle on F9
-map ,p :set invpaste<CR>            " Paste Toggle on ,p
-
-" more page up and down goodness
-map <C-k> <C-b>
-map <C-j> <C-f>
-
-" for perl
-"map ,pl :!clear;perl -cw % <CR>
 " enable/disable spell check
 command! SpellOn setlocal spell spelllang=en_us
 command! SpellOff setlocal nospell
@@ -199,47 +138,5 @@ map ,sp <ESC>:setlocal spell spelllang=en_us<CR>
 " auto-complete and omnicomplete
 " see :help ins-completion and :help complete
 set omnifunc=syntaxcomplete#Complete
-
-" vi shortcuts
-" reload vim configuration
-map ,vr :so $MYVIMRC<CR>
-
-" make shortcuts
-map ,mt :!clear;make test<CR>
-
-" grunt shortcuts
-map ,gt :!clear;grunt test<CR>
-
-" hide and show comments
-map ,sc :highlight Comment term=bold ctermfg=white<CR>
-map ,hc :highlight Comment term=bold ctermfg=darkgray<CR>
-map ,nc :highlight Comment term=bold ctermfg=black<CR>
-
-nnoremap <F10> :set invhls<CR>:let @/="<C-r><C-w>"<CR>/<BS>
-
-" for vim-airline status line
-let g:airline_theme='bubblegum'     " i prefer pastels
-let g:airline_left_sep=''           " remove the left separator, cause who needs special fonts!
-let g:airline_right_sep=''          " same as above, but for the right
-
-let g:airline#extensions#tabline#show_tab_nr = 1       " show tabe numbers
-let g:airline#extensions#tabline#tab_nr_type = 1       " use tab number
-let g:airline#extensions#tabline#enabled = 1           " always show the tab line
-let g:airline#extensions#tabline#left_sep = ''         " remove the tab line left separator
-let g:airline#extensions#tabline#right_sep = ''        " same as above, but for the right
-let g:airline#extensions#tabline#left_alt_sep = ''     " remove the left alternate separator
-
-let g:airline#extensions#tabline#show_buffers = 1      " show buffers
-let g:airline#extensions#tabline#buffer_nr_show = 1    " show buffer numbers
-
-" for patching the theme
-"let g:airline_theme_patch_func = 'AirlineThemePatch'
-"function! AirlineThemePatch(palette)
-"  if g:airline_theme == 'badwolf'
-"    for colors in values(a:palette.inactive)
-"      let colors[3] = 245
-"    endfor
-"  endif
-"endfunction
 
 " vim:set ts=2 sw=2 nowrap:
