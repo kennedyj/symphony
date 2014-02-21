@@ -17,7 +17,7 @@ parse_git_branch() {
     then
       if [[ $(tput cols) -lt $PROMPT_SHRINK_AT ]]; then
         short=$(echo $BRANCH_NAME | cut -c1-1)
-        echo -e "$COLOR_PURPLE$short$COLOR_NONE"
+        echo -e "$COLOR_GRAY\072$COLOR_PURPLE$short$COLOR_NONE"
       else
         echo -e "$COLOR_GRAY\072$COLOR_PURPLE$BRANCH_NAME$COLOR_NONE"
       fi
@@ -110,11 +110,11 @@ prompt_cdir() {
     done
 
     # return the shortened path
-    echo "$COLOR_GRAY\072$COLOR_LIGHT_BLUE$np"
+    echo "$COLOR_LIGHT_BLUE$np"
   else
     echo "$COLOR_LIGHT_BLUE\w"
   fi
 }
 
-PROMPT_COMMAND='PS1="$(prompt_deps)$(prompt_mausoleum)$(print_aws_account)$(prompt_time)$(prompt_virtualenv)$(parse_git_branch)$(prompt_cdir)$COLOR_GRAY\072\$(if [[ \$? == 0 ]]; then echo \"$COLOR_GREEN\342\234\223$COLOR_NONE\"; else echo \"$COLOR_RED\342\234\227$COLOR_NONE\"; fi)$COLOR_GRAY\072 $COLOR_NONE";'
+PROMPT_COMMAND='PS1="$(prompt_deps)$(prompt_mausoleum)$(print_aws_account)$(prompt_time)$(prompt_virtualenv)$(prompt_cdir)$(parse_git_branch)$COLOR_GRAY\072\$(if [[ \$? == 0 ]]; then echo \"$COLOR_GREEN\342\234\223$COLOR_NONE\"; else echo \"$COLOR_RED\342\234\227$COLOR_NONE\"; fi)$COLOR_GRAY\072 $COLOR_NONE";'
 
