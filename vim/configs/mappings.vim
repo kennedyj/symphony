@@ -19,6 +19,9 @@ nnoremap <F8> :GundoToggle<CR>
 map <F9> :set invpaste<CR>          " Paste Toggle on F9
 map ,p :set invpaste<CR>            " Paste Toggle on ,p
 
+map ,f :CtrlP<CR>
+map ,b :CtrlPBuffer<CR>
+
 " more page up and down goodness
 map <C-k> <C-b>
 map <C-j> <C-f>

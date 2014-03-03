@@ -1,12 +1,9 @@
 " start the plugins!
-" each bundle is specifically loaded, just comment one out to not load it
+for plugin in g:local_plugins
+  exec 'set rtp+=~/.vim/bundle/' . plugin
+endfor
 
-set rtp+=~/.vim/bundle/bufferline/
-" visualize the vim undo history
-set rtp+=~/.vim/bundle/gundo/
-" git integration
-set rtp+=~/.vim/bundle/fugitive/
-" add or replace quotes/tags/parens around stuff 
-set rtp+=~/.vim/bundle/surround/
-
+for plugin in g:personal_plugins
+  exec 'set rtp+=~/.vim/bundle/' . plugin
+endfor
 " end plugins

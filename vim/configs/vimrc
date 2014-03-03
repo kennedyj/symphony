@@ -1,5 +1,7 @@
 set nocompatible                    " get out of vi-compatible mode
 
+let NERDTreeIgnore = []
+
 " local vimrc configuration
 " TODO need to figure out where I want this to be
 let s:localrc = expand($HOME . '/.vimrc.local')
@@ -7,10 +9,26 @@ if filereadable(s:localrc)
   exec ':so ' . s:localrc
 endif
 
+" set directories and files to ignore, see :help ctrlp-options
+" this is may also be used by the custom config files
+call organism#ctrlpignoredir('\v[\/]\.(git|hg|svn)$')
+
+" this will determine what plugins to load by the plugins
+" configuration file. Override this in the vimrc.local as needed
+if ! exists('g:local_plugins')
+  let g:local_plugins = ['ctrlp', 'gundo', 'fugitive', 'surround', 'syntastic']
+endif
+
+" if you want the defaults, but also have others to add, here's a good place
+" for it
+if ! exists('g:personal_plugins')
+  let g:personal_plugins = []
+endif
+
 " declare with configs to load
 " you can override this in your local settings
 if ! exists('g:local_configs')
-  let g:local_configs = ['plugins', 'airline', 'nerdtree', 'mappings', 'python', 'numpad', 'status']
+  let g:local_configs = ['plugins', 'airline', 'nerdtree', 'mappings', 'python', 'java', 'numpad', 'status']
 endif
 
 " change this if you want to load your files from elsewhere
@@ -124,7 +142,7 @@ set mouset=500
 " Set nice colors
 syntax enable
 " choose the dark color scheme
-color dark
+color light
 
 set magic                           " Change the special charecters for searching
 set smd                             " Enable Show Mode on the last line

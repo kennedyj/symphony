@@ -1,31 +1,35 @@
-:syntax enable
-"set bg=dark
+" Based on
+runtime colors/grb256.vim
 
-:hi Normal          ctermfg=black
-:hi Statement       ctermfg=red
-:hi Identifier      ctermfg=blue
+let g:colors_name = "light"
 
-:hi Pmenu           ctermfg=white ctermbg=blue
-:hi PmenuSel        ctermfg=blue  ctermbg=white cterm=bold
-:hi PmenuSbar       ctermfg=blue  ctermbg=white
+hi Comment      ctermfg=243
+hi LineNr       ctermfg=247
+hi Directory    ctermfg=12
+hi MoreMsg      ctermfg=70
+hi Question     ctermfg=29
+hi WildMenu     ctermfg=237
+hi FoldColumn   ctermfg=29
+hi DiffText     ctermfg=251
+hi SignColumn   ctermfg=29
 
-:hi Type            ctermfg=cyan cterm=bold
-:hi Constant        ctermfg=blue cterm=bold
-:hi PreProc         ctermfg=lightblue
-:hi Special         ctermfg=darkred
-:hi Comment         ctermfg=yellow
+hi Function     ctermfg=93
+hi Constant     ctermfg=14
+hi Identifier   ctermfg=22
+hi Statement    ctermfg=18
+hi Type         ctermfg=130
+hi Operator     ctermfg=33
+hi String       ctermfg=2
 
-:hi Search          ctermfg=black       ctermbg=yellow
-:hi Visual          ctermfg=lightcyan   ctermbg=black
-:hi WarningMsg      ctermfg=lightred    ctermbg=darkgrey
-:hi Question        ctermfg=white
-:hi StatusLine      ctermfg=red
-:hi NonText         ctermfg=darkgrey
-:hi Cursor          ctermfg=black
+hi Visual                   ctermbg=246                  
+hi CursorLine               ctermbg=252  cterm=bold      
+hi Search       ctermfg=0   ctermbg=58   cterm=NONE      
+hi SpellBad     ctermfg=160 ctermbg=NONE cterm=underline term=NONE 
 
-:hi DiffAdd         ctermfg=white       ctermbg=green
-:hi DiffDelete      ctermfg=white       ctermbg=red
-:hi DiffChange      ctermfg=white       ctermbg=magenta
 
-:hi statusline      ctermfg=blue   ctermbg=black
-:hi statuslineNC    ctermfg=white  ctermbg=black
+augroup BgHighlight
+  autocmd!
+  autocmd WinEnter * set cul
+  autocmd WinLeave * set nocul
+augroup END
+
