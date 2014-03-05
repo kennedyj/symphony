@@ -1,0 +1,35 @@
+[global_config]
+  handle_size = 0
+  title_hide_sizetext = True
+  title_transmit_fg_color = "#636363"
+  title_inactive_fg_color = "#b9b9b9"
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  title_transmit_bg_color = "#d9d9d9"
+  tab_position = right
+  title_inactive_bg_color = "#e1e1e1"
+[keybindings]
+[profiles]
+  [[default]]
+    palette = "#aaaaaa:#6d2e2f:#348235:#6e6f2e:#40499c:#6d3688:#004949:#313336:#9399a4:#7a444d:#88a945:#a7a25d:#458bb1:#b466c5:#277d7d:#323232"
+    font = Source Code Pro Medium 10
+    background_darkness = 0.85
+    use_system_font = False
+    cursor_color = "#ea8825"
+    foreground_color = "#535353"
+    scroll_on_output = False
+    show_titlebar = False
+    copy_on_selection = True
+    background_color = "#ebebeb"
+    cursor_blink = False
+    scrollback_infinite = True
+    scrollbar_position = disabled
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
