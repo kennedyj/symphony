@@ -10,21 +10,23 @@
 [keybindings]
 [profiles]
   [[default]]
-    scrollbar_position = hidden
+    foreground_color = "#535353"
     palette = "#aaaaaa:#6d2e2f:#348235:#6e6f2e:#40499c:#6d3688:#004949:#313336:#9399a4:#7a444d:#88a945:#a7a25d:#458bb1:#b466c5:#277d7d:#323232"
     font = Source Code Pro Medium 10
     background_image = None
     background_darkness = 0.85
     use_system_font = False
     cursor_color = "#ea8825"
-    foreground_color = "#535353"
+    cursor_blink = False
     scroll_on_output = False
+    scrollbar_position = hidden
     show_titlebar = False
     copy_on_selection = True
     background_color = "#ebebeb"
-    cursor_blink = False
+    allow_bold = False
     scrollback_infinite = True
   [[dark]]
+    allow_bold = False
     scrollbar_position = hidden
     palette = "#000000:#B2494B:#3E9A3F:#C1C14F:#515BC4:#B159DE:#009696:#8F8F8F:#555555:#DA7886:#9FC651:#BDB669:#4F9FC9:#CA72DD:#48DBDB:#E5E5E5"
     font = Source Code Pro Medium 10
