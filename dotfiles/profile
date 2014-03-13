@@ -1,6 +1,8 @@
 #!/bin/bash
 
 export _EMPTY_SHELL=0
+# Uncomment to enable verbose printing during shell loading
+#export DEBUG_SHELL=1
 
 # must haves
 export CLICOLOR=true
@@ -23,6 +25,20 @@ COLOR_LIGHT_BLUE="\[\033[1;34m\]"
 
 COLOR_DARK_GREEN="\[\033[1;36m\]"
 
+source_file() {
+  file=$1
+    # check that it's a file, the there isn't an ignore, and that it isn't
+    # the ignore file
+    if [ -f $file ] && [ ! -e "$file.ignore" ] && ! [[ $file =~ ignore$ ]]
+    then
+      if [ -n "$DEBUG_SHELL" ]
+      then
+        printf "$file\n"
+      fi
+      . $file
+    fi
+}
+
 # load the profiles
 if [ "${#EMPTY_SHELL}" -lt 1 ]
 then
@@ -32,7 +48,7 @@ then
   then
     for p in $HOME/.mausoleum/profiles/*
     do
-      [ -f $p ] && . $p
+      source_file $p
     done
   fi
 
@@ -41,7 +57,7 @@ then
   then
     for p in $HOME/.cellar/profiles/*
     do
-      [ -f $p ] && . $p
+      source_file $p
     done
   fi
 
@@ -50,7 +66,7 @@ then
   then
     for p in $HOME/.symphony/profiles/*
     do
-      [ -f $p ] && . $p
+      source_file $p
     done
   fi
 fi

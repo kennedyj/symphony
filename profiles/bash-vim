@@ -2,6 +2,6 @@
 
 # description: add some alias to add vim commands to bash
 
-alias :q="logout"
-alias :qa="logout"
+alias :q="echo \"you're not in vi\"; false"
+alias :qa="echo \"you're not in vi\"; false"
 alias :w="echo \"not editing a file\"; false"

@@ -22,6 +22,13 @@ map ,p :set invpaste<CR>            " Paste Toggle on ,p
 map ,f :CtrlP<CR>
 map ,b :CtrlPBuffer<CR>
 
+" resize windows
+nnoremap ,w+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap ,w- :exe "resize " . (winheight(0) * 2/3)<CR>
+
+nnoremap ,wv+ :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap ,wv- :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+
 " more page up and down goodness
 map <C-k> <C-b>
 map <C-j> <C-f>
@@ -34,15 +41,9 @@ map <C-j> <C-f>
 map ,vr :so $MYVIMRC<CR>
 
 " make shortcuts
-map ,mt :!clear;make test<CR>
+map ,rmt :!clear;make test<CR>
 
 " grunt shortcuts
-map ,gt :!clear;grunt test<CR>
-
-" hide and show comments
-map ,sc :highlight Comment term=bold ctermfg=white<CR>
-map ,hc :highlight Comment term=bold ctermfg=darkgray<CR>
-map ,nc :highlight Comment term=bold ctermfg=black<CR>
+map ,rgt :!clear;grunt test<CR>
 
 nnoremap <F10> :set invhls<CR>:let @/="<C-r><C-w>"<CR>/<BS>
-

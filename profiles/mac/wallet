@@ -27,6 +27,12 @@ complete -W "$(echo ${wallet_list[@]})" wallet_manage
 # allow quick switching between wallets. Make sure wallet is closed when
 # you switch
 wallet_manage() {
+  # load in your key list
+  if [ -e "$WALLET_DBS" ]
+  then
+    . $WALLET_DBS
+  fi
+
   # set the name, just in case
   wallet_current false
 
@@ -86,6 +92,11 @@ wallet_manage() {
 
 # identify what wallet file you are currently using
 wallet_current() {
+  if [ -e "$WALLET_DBS" ]
+  then
+    . $WALLET_DBS
+  fi
+
   do_echo=$1
 
   if [ -z "$do_echo" ]

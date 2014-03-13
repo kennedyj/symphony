@@ -5,6 +5,10 @@ alias py='python'
 # For virtualenvwrapper
 if [ -e "/usr/local/bin/virtualenvwrapper.sh" ]
 then
+  if [ -n "$DEBUG_SHELL" ]
+  then
+    echo "loading virtualenvwrapper"
+  fi
   source /usr/local/bin/virtualenvwrapper.sh
 fi
 

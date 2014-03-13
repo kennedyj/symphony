@@ -9,6 +9,10 @@ if filereadable(s:localrc)
   exec ':so ' . s:localrc
 endif
 
+if ! exists('g:ctrlp_working_path_mode')
+  let g:ctrlp_working_path_mode = 'w'
+endif
+
 " set directories and files to ignore, see :help ctrlp-options
 " this is may also be used by the custom config files
 call organism#ctrlpignoredir('\v[\/]\.(git|hg|svn)$')
@@ -28,7 +32,7 @@ endif
 " declare with configs to load
 " you can override this in your local settings
 if ! exists('g:local_configs')
-  let g:local_configs = ['plugins', 'airline', 'nerdtree', 'mappings', 'python', 'java', 'numpad', 'status']
+  let g:local_configs = ['plugins', 'airline', 'nerdtree', 'mappings', 'python', 'java', 'numpad', 'status', 'nonascii']
 endif
 
 " change this if you want to load your files from elsewhere
@@ -106,7 +110,8 @@ set shiftwidth=2                    " set the same (tabstop)
 set softtabstop=2                   " set the same (tabstop)
 set cino=2                          " set the same (tabstop)
 set expandtab                       " Expand Tabs to Whitespace
-set nowrap                          " wrap lines
+set wrap                            " wrap lines
+set showbreak=>..                   " what to put in front of the wrapped line
 set number                          " show line numbers
 set nolist                          " turn off list by default
 
