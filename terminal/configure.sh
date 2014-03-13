@@ -4,12 +4,12 @@ function usage {
 cat << EOF
 usage: $0 options
 
-Configure the default terminal profile 
+Configure the default terminal profile
 
 OPTIONS:
    -h      Show this message
    -c      color scheme to use (light or dark)
-   -t      terminal application (gnome, mate) 
+   -t      terminal application (gnome, mate)
    -p      profile to configure [default]
    -o      use osx keybindings
 EOF

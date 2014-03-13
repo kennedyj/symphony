@@ -1,0 +1,10 @@
+# Add mac style shortcuts for the gnome wm
+dconf write /org/gnome/desktop/wm/keybindings/panel-run-dialog "['<Super>r','<Alt>F2']"
+dconf write /org/gnome/desktop/wm/keybindings/minimize "['<Super>h']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-group "['<Super>grave','<Alt>grave']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-applications "['<Super>Tab','<Alt>Tab']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-windows "['']"
+
+# Change how to open the overview (activities, overlay, etc)
+gsettings set org.gnome.mutter overlay-key "'<Super>space'"
+dconf write /org/gnome/desktop/wm/keybindings/panel-main-menu "['<Alt>F1','<Super>space']"
