@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # install plugins
-alias vagrant_installplugins="grep 'Vagrant.require_plugin' Vagrantfile | awk '{print $2}' | sed \"s/'//g\" | xargs -n 1 vagrant plugin install"
+#alias vagrant_installplugins="grep 'Vagrant.require_plugin' Vagrantfile | awk '{print $2}' | sed \"s/'//g\" | xargs -n 1 vagrant plugin install"

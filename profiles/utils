@@ -4,6 +4,9 @@
 # A place for random bash functions and things that add bin locations that aren't
 # in a separate file.
 
+alias ls='ls -A1'
+alias ll='ls -AlFh'
+
 calc(){ awk "BEGIN{ print $* }" ;}
 
 show_colors() { for i in {0..255} ; do     printf "\x1b[38;5;${i}mcolour${i}\n"; done ;}
