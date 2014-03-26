@@ -39,13 +39,13 @@ parse_git_branch() {
 }
 
 print_aws_account() {
-  if [ "${#aws_account}" -gt 0 ]
+  if [ "${#AWS_ACCOUNT_NAME}" -gt 0 ]
   then
     if [[ $(tput cols) -lt $PROMPT_SHRINK_AT ]] && [ -z "$PROMPT_MULTI_LINE" ]; then
-      short=$(echo $aws_account | cut -c1-2)
+      short=$(echo $AWS_ACCOUNT_NAME | cut -c1-2)
       echo -e "$COLOR_LIGHT_RED$short$COLOR_NONE"
     else
-      echo -e "$COLOR_LIGHT_RED$aws_account$COLOR_GRAY\072$COLOR_PURPLE$AWS_REGION$COLOR_GRAY\072$COLOR_NONE"
+      echo -e "$COLOR_LIGHT_RED$AWS_ACCOUNT_NAME\072$COLOR_PURPLE$AWS_REGION$COLOR_GRAY\072$COLOR_NONE"
     fi
   fi
 }
@@ -120,3 +120,12 @@ else
   PROMPT_COMMAND='PS1="$(prompt_deps)$(prompt_mausoleum)$(print_aws_account)$(prompt_time)$(prompt_virtualenv)$(prompt_cdir)$(parse_git_branch)$COLOR_GRAY\072\$(if [[ \$? == 0 ]]; then echo \"$COLOR_GREEN\342\234\223$COLOR_NONE\"; else echo \"$COLOR_RED\342\234\227$COLOR_NONE\"; fi)$COLOR_GRAY\072 $COLOR_NONE";'
 fi
 
+#if [ "$SHELL" = '/bin/bash' ]
+#then
+#  case $TERM in
+#     rxvt|*term)
+#      set -o functrace
+#      trap 'echo -ne "\e]0;$BASH_COMMAND\007"' DEBUG
+#     ;;
+#  esac
+#fi

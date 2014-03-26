@@ -147,7 +147,6 @@ set mouset=500
 " Set nice colors
 syntax enable
 " choose the dark color scheme
-color light
 
 set magic                           " Change the special charecters for searching
 set smd                             " Enable Show Mode on the last line

@@ -5,8 +5,14 @@ read -p "Remove existing vim configuration (can not be undone)? [y,n] " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  rm -irf .vim
-  rm .vimrc
+  if [ -e "$HOME/.vim" ]
+  then
+    rm -irf $HOME/.vim
+  fi
+  if [ -e "$HOME/.vimrc" ]
+  then
+    rm $HOME/.vimrc
+  fi
 
   ln -s $HOME/.symphony/vim $HOME/.vim
   ln -s $HOME/.vim/configs/vimrc $HOME/.vimrc
@@ -19,7 +25,10 @@ then
   echo    # (optional) move to a new line
   if [[ $REPLY =~ ^[Yy]$ ]]
   then
-    rm $HOME/.tmux.conf
+    if [ -e "$HOME/.tmux.conf" ]
+    then
+      rm $HOME/.tmux.conf
+    fi
     ln -s $HOME/.symphony/dotfiles/tmux.conf $HOME/.tmux.conf
   fi
 else

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # change these variables as needed
-KEY_PAIRS=$HOME/.mausoleum/aws/key-pairs
+export AWS_KEY_PAIRS="$HOME/.mausoleum/aws/key-pairs"
 AWS_USER="ubuntu"
 
 # START example of what goes in key-pairs file
@@ -20,28 +20,51 @@ PROD_VPC="-i $AWS_PEM_PATH/prod-vpc.pem"
 DEV_VPC="-i $AWS_PEM_PATH/dev-vpc.pem"
 # END example of key-pairs
 
+if [ -e "$AWS_KEY_PAIRS" ]
+then
+  . $AWS_KEY_PAIRS
+fi
+
 # change as needed for your setup
 export AWS_PEM_PATH="$HOME/.mausoleum/ssh"
 
-# load in your key list
-if [ -e "$KEY_PAIRS" ]
+# normalize the aws tool paths
+if [ -e "/usr/local/autoscaling" ]
 then
-  . $KEY_PAIRS
+  export AWS_AUTO_SCALING_HOME="/usr/local/autoscaling"
+  export PATH="$PATH:${AWS_AUTO_SCALING_HOME}/bin"
 fi
 
-# normalize the aws tool paths
-export AWS_AUTO_SCALING_HOME="/usr/local/autoscaling"
-export AWS_RDS_HOME="/usr/local/rds-cli"
+if [ -e "/usr/local/rds-cli" ]
+then
+  export AWS_RDS_HOME="/usr/local/rds-cli"
+  export PATH="$PATH:${AWS_RDS_HOME}/bin"
+fi
+
+if [ -e "/usr/local/cloudformation" ]
+then
 export AWS_CLOUDFORMATION_HOME="/usr/local/cloudformation"
+  export PATH="$PATH:${AWS_CLOUDFORMATION_HOME}/bin"
+fi
+
+if [ -e "/usr/local/iam-cli" ]
+then
 export AWS_IAM_HOME="/usr/local/iam-cli"
-export EC2_HOME="/usr/local/ec2-api-tools"
+  export PATH="$PATH:${AWS_IAM_HOME}/bin"
+fi
+
+if [ -e "/usr/local/ec2-api-tools" ]
+then
+  export EC2_HOME="/usr/local/ec2-api-tools"
+  export PATH="$PATH:${EC2_HOME}/bin"
+fi
 
 # for new api tools
 export EC2_PRIVATE_KEY="$AWS_PEM_PATH/$USER-private-key.pem"
 export EC2_CERT="$AWS_PEM_PATH/$USER-certificate.pem"
 
 # add the aws tools to the path
-export PATH="$PATH:${AWS_AUTO_SCALING_HOME}/bin:${AWS_RDS_HOME}/bin:${AWS_CLOUDFORMATION_HOME}/bin:${EC2_HOME}/bin:${AWS_IAM_HOME}/bin"
+export PATH="$PATH:${AWS_RDS_HOME}/bin:${AWS_CLOUDFORMATION_HOME}/bin:${EC2_HOME}/bin:${AWS_IAM_HOME}/bin"
 
 # prod ssh aliases
 alias ese='ssh $PROD_US_EAST_1 -l $AWS_USER'
@@ -76,7 +99,7 @@ complete -W "$ACCOUNT_LIST" aws_account_set
 complete -W "$REGION_LIST" aws_region_set
 
 aws_account_unset() {
-  unset aws_account
+  unset AWS_ACCOUNT_NAME
   unset AWS_ACCESS_KEY_ID
   unset AWS_SECRET_ACCESS_KEY
   unset AWS_ACCESS_KEY
@@ -93,17 +116,23 @@ aws_account_unset() {
 
 # functions to set aws account
 aws_account_set() {
+  # load in your key list
+  if [ -e "$AWS_KEY_PAIRS" ]
+  then
+    . $AWS_KEY_PAIRS
+  fi
+
   name=$1
-  export aws_account=$name
+  export AWS_ACCOUNT_NAME=$name
 
-  eval AWS_ACCESS_KEY_ID=\${$aws_account[0]}
-  eval AWS_SECRET_ACCESS_KEY=\${$aws_account[1]}
+  eval AWS_ACCESS_KEY_ID=\${$AWS_ACCOUNT_NAME[0]}
+  eval AWS_SECRET_ACCESS_KEY=\${$AWS_ACCOUNT_NAME[1]}
   # for the ec2 tools
-  eval AWS_ACCESS_KEY=\${$aws_account[0]}
-  eval AWS_SECRET_KEY=\${$aws_account[1]}
+  eval AWS_ACCESS_KEY=\${$AWS_ACCOUNT_NAME[0]}
+  eval AWS_SECRET_KEY=\${$AWS_ACCOUNT_NAME[1]}
 
-  eval account_number=\${$aws_account[2]}
-  eval default_region=\${$aws_account[3]}
+  eval account_number=\${$AWS_ACCOUNT_NAME[2]}
+  eval default_region=\${$AWS_ACCOUNT_NAME[3]}
 
   aws_region_set $default_region
 
@@ -115,13 +144,13 @@ aws_account_set() {
   export AWS_SECRET_KEY
 
   # for the cloudformation tools
-  export AWS_CREDENTIAL_FILE="$AWS_PEM_PATH/cloudformation-credentials-$aws_account.pek"
+  export AWS_CREDENTIAL_FILE="$AWS_PEM_PATH/cloudformation-credentials-$AWS_ACCOUNT_NAME.pek"
 
   if [ -h "$HOME/.s3cfg" ]
   then
     rm $HOME/.s3cfg
   fi
-  ln -s $HOME/.mausoleum/s3cmd/$aws_account $HOME/.s3cfg
+  ln -s $HOME/.mausoleum/s3cmd/$AWS_ACCOUNT_NAME $HOME/.s3cfg
 
 cat > $AWS_CREDENTIAL_FILE <<EOF
 AWSAccessKeyId=$AWS_ACCESS_KEY_ID
@@ -130,7 +159,7 @@ EOF
 }
 
 aws_account_get() {
-  echo $aws_account
+  echo $AWS_ACCOUNT_NAME
   echo $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
 }
 
