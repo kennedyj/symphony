@@ -1,5 +1,0 @@
-#!/bin/bash
-
-packages=( terminator  compizconfig-settings-manager )
-
-# iterate each package and ask or find some cool way to do that

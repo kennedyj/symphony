@@ -1,0 +1,5 @@
+#!/bin/bash
+
+alias ls='ls -A1'
+alias ll='ls -AlFh'
+
