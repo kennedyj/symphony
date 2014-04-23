@@ -52,7 +52,8 @@ filetype plugin indent on           " load filetype plugins
 
 set history=1000                    " remember 1000 lines of history
 set undolevels=500                  " make sure I can revert back any changes
-set clipboard+=unnamed              " share clipboard among vi windows
+"set clipboard+=unnamed              " share clipboard among vi windows
+set go-=a                           " dont add visual selections to the clipboard
 set ffs=unix,dos,mac                " support the filetypes in this order
 set viminfo+=!                      " make sure it can save viminfo
 set isk+=_,$,@,%,#,-                " none of these should be word dividers
@@ -161,4 +162,16 @@ map ,sp <ESC>:setlocal spell spelllang=en_us<CR>
 " see :help ins-completion and :help complete
 set omnifunc=syntaxcomplete#Complete
 
+" allow vim to work normally for crontabs
+if $VIM_CRONTAB == "true"
+  set nobackup
+  set nowritebackup
+endif
+
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute ", " is not recognized", "discarding unexpected ", "trimming empty "]
+
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
 " vim:set ts=2 sw=2 nowrap:

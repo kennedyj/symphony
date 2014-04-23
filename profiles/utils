@@ -7,6 +7,9 @@
 alias ls='ls -A1'
 alias ll='ls -AlFh'
 
+# allow vim to work properly for crontab
+alias crontab="VIM_CRONTAB=true crontab"
+
 calc(){ awk "BEGIN{ print $* }" ;}
 
 show_colors() { for i in {0..255} ; do     printf "\x1b[38;5;${i}mcolour${i}\n"; done ;}

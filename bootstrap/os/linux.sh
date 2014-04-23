@@ -7,6 +7,7 @@ then
 
   if [ "$osname" == "ubuntu" ]
   then
+    echo "do ubuntu"
   fi
 fi
 
