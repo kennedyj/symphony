@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ -e "$(which docker)" ]
+then
+  alias docker="sudo docker"
+fi
