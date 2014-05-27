@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# TODO: Add prompt for version
+VERSION="3.1.3"
+URL="http://download.jetbrains.com/python/pycharm-community-$VERSION.tar.gz"
+
+if [ ! -e "$(which java)" ]
+then
+  sudo apt-get install -y openjdk-7-jdk
+fi
+
+if [ ! -e "$HOME/.local/pycharm-community-$VERSION/" ]
+then
+  mkdir -p $HOME/.local/
+  curl -s $URL | tar xvz -C $HOME/.local/
+fi
+
+# TODO: Add prompt for overwrite
+if [ ! -e "$HOME/.local/pycharm/" ]
+then
+  ln -s $HOME/.local/pycharm-community-3.1.3 $HOME/.local/pycharm
+fi

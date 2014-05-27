@@ -1,0 +1,11 @@
+#!/bin/bash
+
+read -p "Install docker.io from ubuntu? [y,n] " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  sudo apt-get install -y docker.io
+  sudo ln /usr/bin/docker.io /usr/local/bin/docker
+  echo "DOCKER_OPTS=\"-r -H unix:///var/run/docker.sock -H tcp://0.0.0.0:4243 -api-enable-cors\"" | sudo tee -a /etc/default/docker.io > /dev/null
+  sudo service docker.io restart
+fi
