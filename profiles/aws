@@ -25,6 +25,11 @@ then
   . $AWS_KEY_PAIRS
 fi
 
+if [ -z "$SSH_ALIASES" ]
+then
+  SSH_ALIASES="ssh ese esw esv esu esv ece ecw ede edw edu edv"
+fi
+
 # change as needed for your setup
 export AWS_PEM_PATH="$HOME/.mausoleum/ssh"
 
@@ -84,7 +89,7 @@ alias ecw='scp $PROD_US_WEST_1'
 # Add host names to all commands that ssh
 if [ -e "$HOME/.ssh/known_hosts" ]
 then
-  for c in ssh ese esw esv esu esv ece ecw ede edw edu edv
+  for c in $SSH_ALIASES
   do
     if [ -e "$HOME/.ssh/config" ]
     then

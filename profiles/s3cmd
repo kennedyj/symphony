@@ -1,0 +1,62 @@
+#!/bin/bash
+
+S3CMD_CONFIG_PATH="$HOME/.mausoleum/s3cmd"
+
+if [ -e "$HOME/.local/s3cmd" ];
+then
+  export PATH="$HOME/.local/s3cmd:$PATH"
+fi
+
+S3CMD=$(which s3cmd)
+
+if [ -e "$S3CMD" ];
+then
+  manage_s3cmd() {
+    configs=$(ls $S3CMD_CONFIG_PATH/*)
+
+    if [ -e "$HOME/.s3cfg" ];
+    then
+      current=$(basename `readlink $HOME/.s3cfg`)
+    else
+      current=""
+    fi
+
+    # if no parameter is passed in, or list show the list
+    if [ -z $1 ] || [ "$1" == "list" ]
+    then
+      i=1
+      for name in ${configs[@]}
+      do
+        base=$(basename $name)
+        # check if the current wallet is this one
+        if [ "$base" == "$current" ]
+        then
+          current_str=" (selected)"
+        else
+          current_str=""
+        fi
+        # show the wallets
+        echo " $i. $base$current_str"
+
+        i=$(expr $i + 1)
+      done
+    else
+      name=$1
+      if [ "$current" == "$name" ]
+      then
+        echo "already using '$current'"
+      elif [ ! -e "$S3CMD_CONFIG_PATH/$name" ]
+      then
+        echo "configuration for '$name' doesn't exist"
+      else
+        if [ -e "$HOME/.s3cfg" ];
+        then
+          rm "$HOME/.s3cfg"
+        fi
+
+        ln -s $S3CMD_CONFIG_PATH/$name $HOME/.s3cfg
+        echo "now using '$name'"
+      fi
+    fi
+  }
+fi
