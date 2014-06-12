@@ -1,0 +1,5 @@
+#!/bin/bash
+
+defaults write com.apple.dock hide-mirror -bool true
+defaults write com.apple.dock showhidden -bool YES
+killall Dock

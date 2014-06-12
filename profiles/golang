@@ -2,6 +2,11 @@
 
 export GOPATH="$HOME/.go/"
 
+if [ -e "/usr/local/go/bin" ];
+then
+  export PATH="$PATH:/usr/local/go/bin"
+fi
+
 if [ -e "$HOME/.go/bin/" ];
 then
   export PATH="$PATH:$HOME/.go/bin"

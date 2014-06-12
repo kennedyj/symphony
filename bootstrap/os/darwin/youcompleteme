@@ -1,0 +1,11 @@
+#!/bin/bash
+
+read -p "Install vim YouCompleteMe? [y,n] " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  brew install cmake
+  git clone git@github.com:Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
+  echo cmake -G "Unix Makefiles" . ~/.vim/bundle/YouCompleteMe/cpp
+fi
+

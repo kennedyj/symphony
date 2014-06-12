@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# With the announcement of Truecrypt no longer being support, migrating to OS specific volumes is required. Will need to research how to enable cross platform copying at some point.
+
+# mount: hdiutil attach $MAUSOLEUM_VOLUME -encryption -readwrite -mountpoint $MAUSOLEUM_MOUNT_PATH
+# unmount: hdiutil detach $MAUSOLEUM_MOUNT_PATH
+mausoleum() {
+  if [ "$1" == "help" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ];
+  then
+    echo "usage: "
+    return
+  fi
+
+  _mausoleum_init
+
+  if [ ! -e "$MAUSOLEUM_VOLUME" ];
+  then
+    echo "Volume '$MAUSOLEUM_VOLUME' doesn't exist."
+    return
+  fi
+
+  IS_MOUNTED=$(_mausoleum_mounted)
+
+  if [ "$IS_MOUNTED" -gt 0 ];
+  then
+    if [ "$1" == "detach" ] || [ "$1" == "umount" ] || [ "$1" == "unmount" ];
+    then
+      hdiutil detach $MAUSOLEUM_MOUNT_PATH -quiet
+    else
+      echo "Volume is already mounted."
+    fi
+  else
+    # mount
+    hdiutil attach $MAUSOLEUM_VOLUME -encryption -readwrite -mountpoint $MAUSOLEUM_MOUNT_PATH $MAUSOLEUM_OPTS
+  fi
+}
+
+_mausoleum_init() {
+  if [ -z "$MAUSOLEUM_OPTS" ];
+  then
+    MAUSOLEUM_OPTS="-quiet"
+  fi
+
+  if [ -z "$MAUSOLEUM_VOLUME" ];
+  then
+    MAUSOLEUM_VOLUME="$HOME/Documents/crypt.dmg"
+  fi
+
+  if [ -z "$MAUSOLEUM_MOUNT_PATH" ];
+  then
+    MAUSOLEUM_MOUNT_PATH="$HOME/.mausoleum"
+  fi
+}
+
+_mausoleum_mounted() {
+  _mausoleum_init
+  RESULT=$(hdiutil info | grep $MAUSOLEUM_MOUNT_PATH | wc -l)
+  echo $RESULT
+}

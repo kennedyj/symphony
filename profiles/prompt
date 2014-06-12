@@ -80,6 +80,17 @@ prompt_mausoleum() {
     # radioactive == \xe2\x98\xa2
     echo -e "$COLOR_DARK_GREEN\xe2\x98\xa2$COLOR_GRAY:"
   fi
+
+  # check that the funciton exists
+  CHECK_CRYPTS=$(type _mausoleum_mounted &> /dev/null)
+  if [ "$?" == "0" ];
+  then
+    RES=$(_mausoleum_mounted)
+    if [ $RES -gt 0 ]
+    then
+      echo -e "$COLOR_DARK_GREEN\xe2\x98\xa2$COLOR_GRAY:"
+    fi
+  fi
 }
 
 prompt_deps() {
