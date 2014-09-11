@@ -76,9 +76,15 @@ EOF
 
 # maven config.
 #export M2=$M2_HOME/bin
-export M2_HOME=/usr/local/maven
-export PATH=$M2_HOME/bin:$PATH
+if [ -e "/usr/local/maven" ];
+then
+  export M2_HOME=/usr/local/maven
+elif [ -e "$HOME/.local/apache-maven" ];
+then
+  export M2_HOME="$HOME/.local/apache-maven"
+fi
 
+export PATH=$M2_HOME/bin:$PATH
 export MAVEN_OPTS='-mx1024M'
 
 if [ -e "/usr/libexec/java_home" ]
