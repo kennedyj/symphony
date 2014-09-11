@@ -27,7 +27,7 @@ fi
 
 if [ -z "$SSH_ALIASES" ]
 then
-  SSH_ALIASES="ssh ese esw esv esu esv ece ecw ede edw edu edv"
+  SSH_ALIASES="ssh ese esw esv esu esv ece ecw ede edw edu edv e2e e2w e2v e2u e2v"
 fi
 
 # change as needed for your setup
@@ -76,6 +76,11 @@ alias ese='ssh $PROD_US_EAST_1 -l $AWS_USER'
 alias esw='ssh $PROD_US_WEST_1 -l $AWS_USER'
 alias esu='ssh $PROD_EU_WEST_1 -l $AWS_USER'
 alias esv='ssh $PROD_VPC -l $AWS_USER'
+
+alias e2e='ssh $PROD_US_EAST_1 -l ec2-user'
+alias e2w='ssh $PROD_US_WEST_1 -l ec2-user'
+alias e2u='ssh $PROD_EU_WEST_1 -l ec2-user'
+alias e2v='ssh $PROD_VPC -l ec2-user'
 
 # dev ssh aliases
 alias ede='ssh $DEV_US_EAST_1 -l $AWS_USER'
