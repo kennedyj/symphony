@@ -7,18 +7,22 @@
 	[
 		"All Autocomplete",
 		"Dockerfile Syntax Highlighting",
+		"Generic Config",
 		"GitGutter",
 		"GoSublime",
 		"INI",
 		"LESS",
 		"Origami",
 		"Package Control",
+		"Python Flake8 Lint",
 		"SideBarEnhancements",
+		"SublimeCodeIntel",
 		"Theme - Phoenix",
 		"ThingAlso"
 	],
 	"repositories":
 	[
-		"https://github.com/kennedyj/ThingAlso"
+		"https://github.com/kennedyj/ThingAlso",
+		"https://github.com/kennedyj/ThingAlso.git"
 	]
 }
