@@ -1,1 +1,4 @@
-alias subl='open -a "Sublime Text" '
+#!/bin/bash
+sublime=`basename "$(find /Applications -maxdepth 1 -name "Sublime Text*.app" | sort -r | head -n 1)" | cut -d '.' -f 1`
+
+alias subl="open -a \"$sublime\" "
