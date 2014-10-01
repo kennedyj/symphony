@@ -1,0 +1,140 @@
+#!/bin/bash
+
+CHEFENV_PATH="$HOME/.chefenv"
+
+function _chef_manage_abspath {
+  echo $(python -c "import os; import sys; print os.path.abspath('$1');")
+}
+
+function chef_manage_knife() {
+  TARGET_PATH="$1"
+
+  if [ -z "$2" ];
+  then
+    echo -n "What cookbook path should be used [ENTER]: "
+    read TEMP_PATH
+  else
+    TEMP_PATH="$2"
+  fi
+
+  COOKBOOK_PATH=$(_chef_manage_abspath $TEMP_PATH)
+
+  mkdir -p "$CHEFENV_PATH/$target"
+
+  cat <<EOF | tee $TARGET_PATH/knife.rb > /dev/null
+log_level                :info
+log_location             STDOUT
+node_name                '$USER'
+client_key               '$TARGET_PATH/$USER.pem'
+validation_client_name   'chef-validator'
+validation_key           '$TARGET_PATH/chef-validator.pem'
+chef_server_url          'https://localhost:443'
+syntax_check_cache_path  '$TARGET_PATH/syntax_check_cache'
+cookbook_path            '$COOKBOOK_PATH'
+local_mode true
+EOF
+}
+
+function chef_manage_switch() {
+  if [ -z $target ]
+  then
+    echo "Specify a new target environment"
+  else
+    if [ -e "$HOME/.chef" ] && [ -h "$HOME/.chef" ];
+    then
+      current=$(basename $(readlink $HOME/.chef))
+    elif [ -e "$HOME/.chef" ];
+    then
+      echo "$HOME/.chef is not a link! Aborting!!! Move or remove $HOME/.chef before proceeding."
+      exit 1  
+    else
+      current=""
+    fi
+
+    if [ "$target" != "$current" ]
+    then
+      if [ -e "$HOME/.chef" ];
+      then
+        rm $HOME/.chef
+      fi
+
+      ln -s $CHEFENV_PATH/$target $HOME/.chef
+    fi
+  fi
+}
+
+function chef_manage() {
+  command=$1
+  target=$2
+
+  if [ ! -e "$CHEFENV_PATH" ]
+  then
+    mkdir -p $CHEFENV_PATH
+  fi
+
+  case $command in
+    create)
+      if [ -z $target ] || [ -e "$CHEFENV_PATH/$target" ]
+      then
+        echo "Specify a new environment to create"
+      else
+        chef_manage_knife "$CHEFENV_PATH/$target" ${@:3}
+        chef_manage_switch $target
+      fi
+      ;;
+    remove)
+      read -p "Remove '$target' environment (can not be undone)? [y,n] " -n 1 -r
+      echo    # (optional) move to a new line
+      if [[ $REPLY =~ ^[Yy]$ ]]
+      then
+        rm -rf "$CHEFENV_PATH/$target/"
+      fi
+      ;;
+    switch)
+      chef_manage_switch $target
+      ;;
+    help | --help)
+      cat <<EOF
+Manage chef environments
+
+usage: chef_manage [--help] <command> [<args>]
+
+  list      show the avaliable targets (default command)
+  switch    change to a different environment
+  create    create a new maven environment
+  remove    delete a maven environment
+  help      this message
+EOF
+      ;;
+    *)
+      if [ -e "$HOME/.chef" ] && [ -h "$HOME/.chef" ];
+      then
+        current=$(basename $(readlink $HOME/.chef))
+      elif [ -e "$HOME/.chef" ];
+      then
+        echo "$HOME/.chef is not a link! Aborting!!! Move or remove $HOME/.chef before proceeding."
+        exit 1  
+      else
+        current=""
+      fi
+
+      if [ -z $command ] || [ "$command" == "list" ] || [ "$command" == "current" ]
+      then
+        for d in $CHEFENV_PATH/*
+        do
+          name=$(basename $d)
+          if [ "$current" == "$name" ]
+          then
+            thisone=" (current)"
+          else
+            thisone=""
+          fi
+
+          echo "* $name$thisone"
+        done
+      else
+        echo "chef_manage: '$command' is not a valid command. See 'chef_manage --help'."
+      fi
+      ;;
+  esac  
+}
