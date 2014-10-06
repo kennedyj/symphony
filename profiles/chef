@@ -19,6 +19,12 @@ function chef_manage_knife() {
 
   COOKBOOK_PATH=$(_chef_manage_abspath $TEMP_PATH)
 
+  echo -n "Cookbook Email Address [ENTER]: "
+  read COOKBOOK_EMAIL
+
+  echo -n "Cookbook company name [ENTER]: "
+  read COOKBOOK_COPYRIGHT
+
   mkdir -p "$CHEFENV_PATH/$target"
 
   cat <<EOF | tee $TARGET_PATH/knife.rb > /dev/null
@@ -31,6 +37,8 @@ validation_key           '$TARGET_PATH/chef-validator.pem'
 chef_server_url          'https://localhost:443'
 syntax_check_cache_path  '$TARGET_PATH/syntax_check_cache'
 cookbook_path            '$COOKBOOK_PATH'
+cookbook_copyright       '$COOKBOOK_COPYRIGHT'
+cookbook_email           '$COOKBOOK_EMAIL'
 local_mode true
 EOF
 }
