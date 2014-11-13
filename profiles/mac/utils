@@ -1,5 +1,5 @@
 #!/bin/bash
 
-alias ls='ls -A1'
+alias ls='ls -A'
 alias ll='ls -AlFh'
 
