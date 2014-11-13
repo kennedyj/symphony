@@ -35,6 +35,37 @@ mausoleum() {
   fi
 }
 
+mausoleum_backup() {
+  _mausoleum_init
+
+  IS_MOUNTED=$(_mausoleum_mounted)
+  GPG2CLI=$(which gpg2)
+  GPGCLI=$(which gpg)
+
+  if [ -e "$GPG2CLI" ];
+  then
+    GPGCLI=$GPG2CLI
+  fi
+
+  if [ ! -e "$GPGCLI" ];
+  then
+    echo "No GPG cli found."
+    return
+  fi
+
+  if [ "$IS_MOUNTED" -gt 0 ];
+  then
+    BACKUP_FILE="$MAUSOLEUM_BACKUP_PATH/mausoleum.$(date +"%Y%m%d").tgz.gpg"
+    STARTPWD=$(pwd)
+
+    cd $MAUSOLEUM_MOUNT_PATH && tar -cz * | gpg2 --symmetric --output $BACKUP_FILE
+    cd $STARTPWD
+    echo "Backed up mausoleum to $BACKUP_FILE"
+  else
+    echo "Volume must be mounted to perform a backup."
+  fi
+}
+
 _mausoleum_init() {
   if [ -z "$MAUSOLEUM_OPTS" ];
   then
@@ -49,6 +80,11 @@ _mausoleum_init() {
   if [ -z "$MAUSOLEUM_MOUNT_PATH" ];
   then
     MAUSOLEUM_MOUNT_PATH="$HOME/.mausoleum"
+  fi
+
+  if [ -z "$MAUSOLEUM_BACKUP_PATH" ];
+  then
+    MAUSOLEUM_BACKUP_PATH="$HOME/Documents"
   fi
 }
 
