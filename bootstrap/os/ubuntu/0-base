@@ -1,4 +1,9 @@
 #!/bin/bash
 
+# Update and upgrade all default packages first
+sudo apt-get update --fix-missing -y
+sudo apt-get upgrade -y
+
+# Install baseline packages
 sudo apt-get install -y build-essential vim git ctags vim-scripts vim-addon-manager curl wget fonts-dejavu
 

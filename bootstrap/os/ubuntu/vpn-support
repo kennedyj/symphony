@@ -1,0 +1,8 @@
+#!/bin/bash
+
+read -p "Install gnome openvpn manager? [y,n] " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  sudo apt-get install network-manager-openvpn-gnome 
+fi
