@@ -1,0 +1,8 @@
+#!/bin/bash
+
+manage_jvm() {
+  /usr/libexec/java_home -verbose
+
+  echo ""
+  echo "To select a JVM use: export JAVA_HOME=\"\`/usr/libexec/java_home -v '1.7*'\`\""
+}
