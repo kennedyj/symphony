@@ -55,9 +55,10 @@ mausoleum_backup() {
 
   if [ "$IS_MOUNTED" -gt 0 ];
   then
-    BACKUP_FILE="$MAUSOLEUM_BACKUP_PATH/mausoleum.$(date +"%Y%m%d").tgz.gpg"
+    BACKUP_FILE="$MAUSOLEUM_BACKUP_PATH/mausoleum.$(date +"%Y%m%d.%H%M").tgz.gpg"
     STARTPWD=$(pwd)
 
+    COPYFILE_DISABLE=1
     cd $MAUSOLEUM_MOUNT_PATH && tar -cz * | gpg2 --symmetric --output $BACKUP_FILE
     cd $STARTPWD
     echo "Backed up mausoleum to $BACKUP_FILE"

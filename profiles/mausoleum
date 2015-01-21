@@ -1,0 +1,52 @@
+#!/bin/bash
+
+mausoleum_extract() {
+  GPG2CLI=$(which gpg2)
+  GPGCLI=$(which gpg)
+
+  if [ -e "$GPG2CLI" ];
+  then
+    GPGCLI=$GPG2CLI
+  fi
+
+  if [ ! -e "$GPGCLI" ];
+  then
+    echo "No GPG cli found."
+    return
+  fi
+
+  # Need a file name
+  if [ "X$1" == "X" ];
+  then
+    echo "usage: mausoleum_extract gpg-tarball path"
+    return
+  fi
+
+  # Need a path
+  if [ "X$2" == "X" ];
+  then
+    echo "usage: mausoleum_extract gpg-tarball path"
+    return
+  fi
+
+  BACKUP_FILE="$1"
+  EXTRACT_PATH="$2"
+
+  if [ ! -e "$BACKUP_FILE" ];
+  then
+    echo "Backup file doesn't exist"
+    return
+  fi
+
+  if [ -e "$EXTRACT_PATH" ];
+  then
+    echo "Destination already exists"
+    return
+  fi
+
+  echo "Extracting $BACKUP_FILE to $EXTRACT_PATH"
+  STARTPWD=$(pwd)
+  mkdir -p "$EXTRACT_PATH"
+  cd "$EXTRACT_PATH" && $GPGCLI --decrypt --interactive "$BACKUP_FILE" | tar zx --exclude=".*"
+  cd "$STARTPWD"
+}
