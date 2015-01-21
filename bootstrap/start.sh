@@ -46,7 +46,17 @@ fi
 bash $HOME/.symphony/fonts/install.sh
 
 # load the profile
-cat <<EOF | tee -a $HOME/.profile > /dev/null
-PROFILE_LOAD="\$HOME/.symphony/dotfiles/profile"
-[ -s \$PROFILE_LOAD ] && . \$PROFILE_LOAD
+echo "Add the following to your .bashrc or .profile"
+echo <<EOF
+# Only load if we are interactive
+case $- in
+  *i*)
+    PROFILE_LOAD="\$HOME/.symphony/dotfiles/profile"
+    if [ -e "$PROFILE_LOAD" ];
+    then
+      [ -s "\$PROFILE_LOAD" ] && . "\$PROFILE_LOAD"
+    fi
+    ;;
+  *) ;;
+esac
 EOF

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo apt-get install -y build-essential vim git network-manager-openvpn-gnome ctags vim-scripts vim-addon-manager curl wget fonts-dejavu terminator
+sudo apt-get install -y build-essential vim git ctags vim-scripts vim-addon-manager curl wget fonts-dejavu
 

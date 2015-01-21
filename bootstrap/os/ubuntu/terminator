@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sudo apt-get install -y terminator
+
+if [ -e "$HOME/.config/terminator" ];
+then
+  rm -rf "$HOME/.config/terminator"
+fi
+
+ln -s $HOME/.symphony/terminal/terminator $HOME/.config/terminator
