@@ -3,6 +3,14 @@
 	[
 		"https://sublime.wbond.net/channel.json"
 	],
+	"in_process_packages":
+	[
+	],
+	"installed_dependencies":
+	[
+		"0_package_control_loader",
+		"bz2"
+	],
 	"installed_packages":
 	[
 		"All Autocomplete",
@@ -11,10 +19,12 @@
 		"GitGutter",
 		"GoSublime",
 		"INI",
+		"JsFormat",
 		"LESS",
 		"Origami",
 		"Package Control",
 		"Python Flake8 Lint",
+		"SCSS",
 		"SideBarEnhancements",
 		"SublimeCodeIntel",
 		"Theme - Phoenix",

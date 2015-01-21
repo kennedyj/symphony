@@ -2,7 +2,7 @@
 	"auto_complete": true,
 	"bold_folder_labels": true,
 	"caret_style": "smooth",
-	"color_scheme": "Packages/ThingAlso/thingAlso.tmTheme",
+	"color_scheme": "Packages/User/thingAlso (Flake8Lint).tmTheme",
 	"detect_indentation": false,
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Source Code Pro",
@@ -11,9 +11,9 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
+		"Vintage",
 		"GoSublime",
-		"GitGutter",
-		"Vintage"
+		"GitGutter"
 	],
 	"indent_guide_options":
 	[
