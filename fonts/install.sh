@@ -5,27 +5,27 @@ echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
 
-# [Source Code Pro](http://www.google.com/fonts/specimen/Source+Code+Pro)
+# [Source Code Pro](https://github.com/adobe-fonts/source-code-pro)
+FONT_URL="https://github.com/adobe-fonts/source-code-pro/archive/1.017R.tar.gz"
+
 cd /tmp
-curl -Ls 'http://downloads.sourceforge.net/project/sourcecodepro.adobe/SourceCodePro_FontsOnly-1.017.zip' -o /tmp/SourceCodePro_fonts.zip
-unzip -q SourceCodePro_fonts.zip
+curl -Ls "$FONT_URL" | tar xvz
 
 OS_NAME=$(uname -s)
 
 if [ "$OS_NAME" == "Linux" ]
 then
   mkdir -p $HOME/.fonts
-  cp /tmp/SourceCodePro_FontsOnly*/OTF/*.otf $HOME/.fonts/
+  cp /tmp/source-code-pro-*/OTF/*.otf $HOME/.fonts/
 fi
 
 if [ "$OS_NAME" == "Darwin" ]
 then
-  cp /tmp/SourceCodePro_FontsOnly*/TTF/*.ttf $HOME/Library/Fonts/
+  cp /tmp/source-code-pro-*/TTF/*.ttf $HOME/Library/Fonts/
 fi
 
 # cleanup
-rm -rf /tmp/SourceCodePro_*
-
+rm -rf /tmp/source-code-pro-*
 fi
 
 # todo: add support for other fonts. This will require templating sublime configs....
