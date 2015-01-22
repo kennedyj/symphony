@@ -1,0 +1,42 @@
+#!/bin/bash
+
+manage_liquibase_env() {
+  if [ -e "$HOME/.local/liquibase" ]
+  then
+    export PATH="$PATH:$HOME/.local/liquibase"
+    export LIQUIBASE_HOME="$HOME/.local/liquibase"
+  fi
+}
+
+manage_liquibase_install() {
+  LIQUIBASE_VERSION="3.3.2"
+  LIQUIBASE_TARGET="$HOME/.local/liquibase-$LIQUIBASE_VERSION"
+
+  if [ ! -e "$LIQUIBASE_TARGET" ];
+  then
+    echo "Downloading and install liquibase $LIQUIBASE_VERSION"
+    START_DIR=$(pwd)
+
+    mkdir -p "$LIQUIBASE_TARGET" || echo "error creating $LIQUIBASE_TARGET"; return
+
+    cd "$LIQUIBASE_TARGET"
+    curl -s "http://downloads.sourceforge.net/project/liquibase/Liquibase%20Core/liquibase-$LIQUIBASE_VERSION-bin.tar.gz" --output "liquibase-$LIQUIBASE_VERSION-bin.tar.gz" || echo "unable to download the tar ball"; return
+    tar zxf "liquibase-$LIQUIBASE_VERSION-bin.tar.gz" || echo "error extracting the tar ball"; return
+    rm "liquibase-$LIQUIBASE_VERSION-bin.tar.gz"
+
+    cd "$START_DIR"
+  fi
+
+  if [ -e "$HOME/.local/liquibase" ];
+  then
+    echo "Removing existing liquibase link"
+    rm "$HOME/.local/liquibase"
+  fi
+
+  ln -s "$LIQUIBASE_TARGET" "$HOME/.local/liquibase"
+
+  manage_liquibase_env
+}
+
+manage_liquibase_env
+
