@@ -8,6 +8,8 @@ git/config
 sublime/user/Package Control.cache
 sublime/user/Package Control.last-run
 sublime/user/Package Control.system-ca-bundle
+sublime/user/Package Control.merged-ca-bundle
+sublime/user/Package Control.user-ca-bundle
 sublime/user/Side Bar.sublime-settings
 
 sublime/user/GoSublime/
