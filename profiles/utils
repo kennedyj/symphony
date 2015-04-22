@@ -15,6 +15,11 @@ function aliases() {
   alias | cut -d '=' -f 1 | awk '{print $2}' | sort -u
 }
 
+if [ -e "$HOME/.local/.bin" ]
+then
+  export PATH=$HOME/.local/.bin:$PATH
+fi
+
 # load user bin and bash functions
 if [ -e "$HOME/.bin" ]
 then
@@ -22,8 +27,8 @@ then
 
   if [ -e "$HOME/.bin/bash" ]
   then
-    for f in $(ls $HOME/.bin/bash/); do
-      . $HOME/.bin/bash/$f
+    for f in $HOME/.bin/bash/*; do
+      . "$HOME/.bin/bash/$f"
     done
   fi
 fi

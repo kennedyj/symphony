@@ -6,19 +6,16 @@
 	"in_process_packages":
 	[
 	],
-	"installed_dependencies":
-	[
-		"0_package_control_loader",
-		"bz2"
-	],
 	"installed_packages":
 	[
 		"All Autocomplete",
+		"Color Highlighter",
 		"Dockerfile Syntax Highlighting",
 		"Generic Config",
 		"GitGutter",
 		"GoSublime",
 		"INI",
+		"Jinja2",
 		"JsFormat",
 		"LESS",
 		"Origami",
@@ -26,7 +23,6 @@
 		"Python Flake8 Lint",
 		"SCSS",
 		"SideBarEnhancements",
-		"SublimeCodeIntel",
 		"Theme - Phoenix",
 		"ThingAlso"
 	],

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "X$1" == "X" ]
+then
+  echo "usage: $0 certificate"
+  exit 1
+fi
+
+echo "  - output the stat and end dates for the certificate"
+
+openssl x509 -dates -noout -in "$1"

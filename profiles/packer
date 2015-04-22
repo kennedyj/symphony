@@ -4,3 +4,8 @@ if [ -e "$HOME/.packer" ]
 then
   export PATH="$PATH:$HOME/.packer"
 fi
+
+if [ -e "$HOME/.local/packer" ]
+then
+  export PATH="$PATH:$HOME/.local/packer"
+fi

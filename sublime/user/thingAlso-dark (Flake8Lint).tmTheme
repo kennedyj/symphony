@@ -5,23 +5,22 @@
 	<key>comment</key>
 	<string>https://github.com/kennedyj/ThingAlso</string>
 	<key>name</key>
-	<string>ThingAlso</string>
+	<string>ThingAlso-dark</string>
 	<key>settings</key>
 	<array>
 		<dict>
 			<key>settings</key>
 			<dict>
 				<key>background</key>
-				<string>#ECECEC</string>
+				<string>#2D2D2D</string>
 				<key>caret</key>
-        
-        <string>#0000FF</string>
+				<string>#CCCCCC</string>
 				<key>foreground</key>
-				<string>#3E3E3E</string>
+				<string>#BBBBBB</string>
 				<key>invisibles</key>
-				<string>#BFBFBF</string>
+				<string>#6A6A6A</string>
 				<key>lineHighlight</key>
-				<string>#E1E6E6</string>
+				<string>#393939</string>
 				<key>selection</key>
 				<string>#B5D5FF</string>
 			</dict>
@@ -34,7 +33,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#878C96</string>
+				<string>#7C7C7C</string>
 			</dict>
 		</dict>
 		<dict>
@@ -47,7 +46,7 @@
 				<key>fontStyle</key>
 				<string />
 				<key>foreground</key>
-				<string>#3E3E3E</string>
+				<string>#CCCCCC</string>
 			</dict>
 		</dict>
 		<dict>
@@ -71,7 +70,7 @@
 				<key>fontStyle</key>
 				<string />
 				<key>foreground</key>
-				<string>#006767</string>
+				<string>#00BBBB</string>
 			</dict>
 		</dict>
 		<dict>
@@ -84,7 +83,7 @@
 				<key>fontStyle</key>
 				<string />
 				<key>foreground</key>
-				<string>#B7A30A</string>
+				<string>#FFCC66</string>
 			</dict>
 		</dict>
 		<dict>
@@ -97,7 +96,7 @@
 				<key>fontStyle</key>
 				<string />
 				<key>foreground</key>
-				<string>#4992B8</string>
+				<string>#66CCFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -121,7 +120,7 @@
 				<key>fontStyle</key>
 				<string />
 				<key>foreground</key>
-				<string>#6D916C</string>
+				<string>#99CC99</string>
 			</dict>
 		</dict>
 		<dict>
@@ -134,7 +133,7 @@
 				<key>fontStyle</key>
 				<string />
 				<key>foreground</key>
-				<string>#C57245</string>
+				<string>#F99157</string>
 			</dict>
 		</dict>
 		<dict>
@@ -222,6 +221,6 @@
             </dict>
         </dict></array>
 	<key>uuid</key>
-	<string>BB52122D-A5CF-445D-A3DF-362723B4410A</string>
+	<string>E28D314C-F0E5-4EFF-A2D3-64CEC044C6EB</string>
 </dict>
 </plist>

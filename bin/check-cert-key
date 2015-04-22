@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ "X$1" == "X" ] || [ "X$2" == "X" ]
+then
+  echo "usage: $0 certificate private-key"
+  exit 1
+fi
+
+echo "  - outputs the finger-print md5 for the cert and key. If there are two outputs, they don't match."
+
+# e.g.: ./check-cert.sh interactive_genentech_com/interactive_genentech_com.txt interactive_genentech_com/interactive_genentech_com.key
+
+(openssl x509 -noout -modulus -in "$1" | openssl md5 ;\
+ openssl rsa -noout -modulus -in "$2" | openssl md5) | uniq
