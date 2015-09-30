@@ -9,16 +9,18 @@
   "font_options": ["no_round"],
   // # Themes
   //   See: https://github.com/buymeasoda/soda-theme/wiki/Theme-customisation
+  // ## Spacegray
+  "theme" : "Spacegray.sublime-theme",
   // ## Elementary Theme
   //  "theme": "Elementary Light 3.sublime-theme",
   //  "elementary_folder_icons": true,
   // ## Phoenix Theme
   // https://github.com/netatoo/phoenix-theme
   // "theme": "Phoenix Dark.sublime-theme",
-  "theme": "Phoenix Light.sublime-theme",
-  "phoenix_highlight_current_tab": true,
-  "phoenix_dirty_bottom_bar": true,
-  "phoenix_dirty_bottom_bar_red": true,
+  // "theme": "Phoenix Light.sublime-theme",
+  // "phoenix_highlight_current_tab": true,
+  // "phoenix_dirty_bottom_bar": true,
+  // "phoenix_dirty_bottom_bar_red": true,
   // ### Colors: Light theme : blue, darkblue - Dark Theme : red, green, blue, orange, yellow and pink
   // "phoenix_color_green": true,
   // "phoenix_color_red": true,
