@@ -1,7 +1,7 @@
 {
-  "font_size": 14.0,
+  "font_size": 15.0,
   // "color_scheme": "Packages/ThingAlso/thingAlso-dark.tmTheme",
-  "color_scheme": "Packages/ThingAlso/thingAlso.tmTheme",
+  //"color_scheme": "Packages/ThingAlso/thingAlso.tmTheme",
   // ## Font options
   // Valid options are "no_bold", "no_italic", "no_antialias", "gray_antialias",
   // "subpixel_antialias", "no_round" (OS X only), "GDI" (Windows only) and
@@ -16,13 +16,16 @@
   // https://github.com/netatoo/phoenix-theme
   // "theme": "Phoenix Dark.sublime-theme",
   "theme": "Phoenix Light.sublime-theme",
+  "phoenix_highlight_current_tab": true,
+  "phoenix_dirty_bottom_bar": true,
+  "phoenix_dirty_bottom_bar_red": true,
   // ### Colors: Light theme : blue, darkblue - Dark Theme : red, green, blue, orange, yellow and pink
   // "phoenix_color_green": true,
   // "phoenix_color_red": true,
   // "phoenix_color_orange": true,
   // "phoenix_color_blue": true,
   // "phoenix_color_yellow": true,
-  "phoenix_highlight_current_tab": true,
-  "phoenix_dirty_bottom_bar": true,
-  "phoenix_dirty_bottom_bar_red": true,
+  // "phoenix_highlight_current_tab": true,
+  // "phoenix_dirty_bottom_bar": true,
+  // "phoenix_dirty_bottom_bar_red": true,
 }

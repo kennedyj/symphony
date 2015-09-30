@@ -1,4 +1,5 @@
 {
+	"bootstrapped": true,
 	"channels":
 	[
 		"https://sublime.wbond.net/channel.json"
@@ -23,7 +24,9 @@
 		"Python Flake8 Lint",
 		"SCSS",
 		"SideBarEnhancements",
+		"Theme - Orchis",
 		"Theme - Phoenix",
+		"Theme - Spacegray",
 		"ThingAlso"
 	],
 	"repositories":

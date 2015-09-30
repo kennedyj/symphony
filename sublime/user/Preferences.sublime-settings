@@ -11,10 +11,9 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"SublimeCodeIntel",
-		"Vintage",
 		"GitGutter",
-		"GoSublime"
+		"GoSublime",
+		"Vintage"
 	],
 	"indent_guide_options":
 	[
@@ -29,7 +28,9 @@
 	],
 	"scroll_past_end": true,
 	"scroll_speed": 0,
+	"show_folder_icons": false,
 	"show_tab_close_buttons": true,
+	"soda_folder_icons": false,
 	"soda_classic_tabs": false,
 	"spell_check": true,
 	"tab_size": 2,
