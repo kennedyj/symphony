@@ -4,3 +4,5 @@ manage_docker_clean() {
   docker ps -a | grep Exit | awk '{print $1}' | xargs docker rm -v
   docker images | grep '<none>' | awk '{print $3}' | xargs docker rmi
 }
+
+alias docker="docker --tlsverify=false"
