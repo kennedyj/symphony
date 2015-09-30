@@ -147,7 +147,22 @@ set mouset=500
 
 " Set nice colors
 syntax enable
-" choose the dark color scheme
+" automatically choose a vim color scheme profile base on an iterm profile.
+" defaults to dark if no iterm profile is found
+" todo: add support for more than just iterm?
+if ! exists('$VIM_PROFILE')
+  if exists('$ITERM_PROFILE')
+    if $ITERM_PROFILE == 'Default'
+      let $VIM_PROFILE = 'dark'
+    else
+      let $VIM_PROFILE = $ITERM_PROFILE
+    endif
+  else
+    let $VIM_PROFILE = 'dark'
+  endif
+endif
+
+color $VIM_PROFILE
 
 set magic                           " Change the special charecters for searching
 set smd                             " Enable Show Mode on the last line
