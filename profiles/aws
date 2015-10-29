@@ -27,7 +27,7 @@ fi
 
 if [ -z "$SSH_ALIASES" ]
 then
-  SSH_ALIASES="ssh ese esw esv esu esv ece ecw ede edw edu edv e2e e2w e2v e2u e2v"
+  SSH_ALIASES="ssh ese esw esv esu ece ecw ede edw edu edv e2e e2w e2v e2u e2v"
 fi
 
 # change as needed for your setup
