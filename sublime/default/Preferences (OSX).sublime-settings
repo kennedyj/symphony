@@ -10,7 +10,7 @@
   // # Themes
   //   See: https://github.com/buymeasoda/soda-theme/wiki/Theme-customisation
   // ## Spacegray
-  "theme" : "Spacegray.sublime-theme",
+  "theme" : "Spacegray Light.sublime-theme",
   // ## Elementary Theme
   //  "theme": "Elementary Light 3.sublime-theme",
   //  "elementary_folder_icons": true,
