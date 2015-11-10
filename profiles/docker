@@ -5,4 +5,14 @@ manage_docker_clean() {
   docker images | grep '<none>' | awk '{print $3}' | xargs docker rmi
 }
 
+# check for docker-machine
+if [ -e "/usr/local/bin/docker-machine" ];
+then
+  status=$(docker-machine status default)
+  if [ "$status" == "Running" ];
+  then
+    eval "$(docker-machine env default)"
+  fi
+fi
+
 alias docker="docker --tlsverify=false"

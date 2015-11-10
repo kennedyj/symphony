@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# check for docker-machine
-if [ -e "/usr/local/bin/docker-machine" ];
-then
-  eval "$(docker-machine env default)"
-fi
